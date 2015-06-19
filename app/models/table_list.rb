@@ -4,6 +4,9 @@ class TableList < ActiveRecord::Base
   belongs_to :tabling, polymorphic: true
   has_many :table_items
 
+  delegate :email, to: :tabling
+  delegate :one_report, to: :tabling
+
   validates :headers, format: { with: /\n$/,
                                message: "end with return" }
 

@@ -20,6 +20,7 @@ class OneReport::Base
     @columns = []
     @headers = {}
     @fields = {}
+    @table_list = TableList.where(tabling_type: tabling_type, tabling_id: tabling_id).take
   end
 
   def collection_result
