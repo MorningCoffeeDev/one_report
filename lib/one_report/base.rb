@@ -12,6 +12,7 @@ class OneReport::Base
               :fields,
               :collection_model,
               :collection_scope
+  attr_accessor :tabling_type, :tabling_id
 
   def initialize
     @collection_model = nil

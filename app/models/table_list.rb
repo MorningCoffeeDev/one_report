@@ -1,6 +1,7 @@
 require 'pdfs/table_pdf'
 class TableList < ActiveRecord::Base
 
+  belongs_to :tabling, polymorphic: true
   has_many :table_items
 
   validates :headers, format: { with: /\n$/,
