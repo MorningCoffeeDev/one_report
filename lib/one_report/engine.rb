@@ -1,3 +1,5 @@
-class OneReport::Engine < ::Rails::Engine
+module OneReport
+  class Engine < ::Rails::Engine
 
+  end
 end

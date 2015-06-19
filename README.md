@@ -5,6 +5,10 @@ OneReport is used to generate a table report, It can format to csv, pdf
 - Easy to use, Just config it;
 - Strong, even data processing break off, It can be restore easily;
 
+## Functions
+- sidekiq job;
+- send email notice user after finished sidekiq job;
+
 ## Usage
 Consider a table, It's as:
 - A row's data all relative to one object;

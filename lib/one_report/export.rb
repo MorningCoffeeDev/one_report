@@ -3,7 +3,7 @@ module OneReport::Export
   def to_table
     @table_list.update_attributes(headers: header_values.to_csv)
 
-    collection_result.map do |object|
+    collection_result.find_each do |object|
       export_row(object)
     end
 
