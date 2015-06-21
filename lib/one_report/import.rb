@@ -5,11 +5,13 @@ module OneReport::Import
 
     collection_scope.each do |scope|
       if collection_model.respond_to? scope
-        @collection_scope << scope
+        @collection_scope << scope unless @collection_scope.include?(scope)
       else
         raise 'The scope did not defined'
       end
     end
+
+    self
   end
 
 
@@ -42,6 +44,8 @@ module OneReport::Import
     else
       raise 'wrong header type'
     end
+
+    self
   end
 
   def header_default(name)

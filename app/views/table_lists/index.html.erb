@@ -6,7 +6,7 @@
 <table class="table table-striped">
   <thead>
   <tr>
-    <th>File Name</th>
+    <th>ID</th>
     <th colspan="3"></th>
   </tr>
   </thead>
@@ -14,10 +14,10 @@
   <tbody>
   <% @table_lists.each do |table_list| %>
     <tr>
-      <td><%= table_list %></td>
-      <td><%= link_to 'Download Csv', table_list_path(table_list, format: 'csv') %></td>
-      <td><%= link_to 'Download Pdf', table_list_path(table_list, format: 'pdf') %></td>
-      <td><%= link_to 'destroy', table_list_path(table_list), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td><%= table_list.id %></td>
+      <td><%= link_to 'Download Csv', report_list_table_list_path(@report_list, table_list, format: 'csv') %></td>
+      <td><%= link_to 'Download Pdf', report_list_table_list_path(@report_list, table_list, format: 'pdf') %></td>
+      <td><%= link_to 'destroy', report_list_table_list_path(@report_list, table_list), method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
   <% end %>
   </tbody>

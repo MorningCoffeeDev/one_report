@@ -1,12 +1,12 @@
 class TableListsController < OneReport::BaseController
-  before_filter :set_table_list, only: [:show, :edit, :update, :destroy]
+  before_filter :set_report_list
+  before_filter :set_table_list, only: [:show, :destroy]
 
   def index
-    @table_lists = TableList.all
+    @table_lists = @report_list.table_lists
   end
 
   def show
-
 
     respond_to do |format|
       format.csv { send_data @table_list.csv_string, filename: @table_list.csv_file_name, type: 'application/csv' }
@@ -14,39 +14,14 @@ class TableListsController < OneReport::BaseController
     end
   end
 
-  def new
-    @table_list = TableList.new
-  end
-
-  def edit
-  end
-
-  def create
-    @table_list = TableList.new(table_list_params)
-
-    if @table_list.save
-      redirect_to @table_list, notice: 'Table list was successfully created.'
-    else
-      render :new
-    end
-  end
-
-  def update
-    if @table_list.update(table_list_params)
-      redirect_to @table_list, notice: 'Table list was successfully updated.'
-    else
-      render :edit
-    end
-  end
-
-  def destroy
-    @table_list.destroy
-    redirect_to table_lists_url, notice: 'Table list was successfully destroyed.'
-  end
 
   private
   def set_table_list
-    @table_list = TableList.find(params[:id])
+    @table_list = @report_list.table_lists.find(params[:id])
+  end
+
+  def set_report_list
+    @report_list = ReportList.find params[:report_list_id]
   end
 
 

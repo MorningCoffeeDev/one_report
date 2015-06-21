@@ -1,13 +1,14 @@
 module OneReport::Export
 
   def to_table
+    @table_list = report_list.table_lists.create
     @table_list.update_attributes(headers: header_values.to_csv)
 
-    collection_result.find_each do |object|
+    collection_result.each do |object|
       export_row(object)
     end
 
-    DataGeneratorMailer.processing_complete(@table_list.id).deliver
+    ReportFinishMailer.processing_complete(report_list_id).deliver
   end
 
   def export_row(object)

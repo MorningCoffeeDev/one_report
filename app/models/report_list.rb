@@ -1,7 +1,9 @@
 class ReportList < ActiveRecord::Base
   attachment :file
 
-  validates :file_filename, presence: true
-  validates :file_content_type, presence: true
-  validates :file_id, presence: true
+  belongs_to :reportable, polymorphic: true
+  has_one :table_list
+  has_many :table_lists
+  delegate :one_report, to: :reportable
+
 end

@@ -12,7 +12,7 @@ class OneReport::Base
               :fields,
               :collection_model,
               :collection_scope
-  attr_accessor :tabling_type, :tabling_id
+  attr_accessor :report_list_id
 
   def initialize
     @collection_model = nil
@@ -20,7 +20,10 @@ class OneReport::Base
     @columns = []
     @headers = {}
     @fields = {}
-    @table_list = TableList.where(tabling_type: tabling_type, tabling_id: tabling_id).take
+  end
+
+  def report_list
+    @report_list = ReportList.find(report_list_id)
   end
 
   def collection_result

@@ -1,11 +1,9 @@
 require 'pdfs/table_pdf'
 class TableList < ActiveRecord::Base
 
-  belongs_to :tabling, polymorphic: true
+  belongs_to :report_list
   has_many :table_items
 
-  delegate :email, to: :tabling
-  delegate :one_report, to: :tabling
 
   validates :headers, format: { with: /\n$/,
                                message: "end with return" }

@@ -1,11 +1,21 @@
 class ReportListsController < OneReport::BaseController
-  before_filter :set_report_list, only: [:show, :destroy]
+  before_filter :set_report_list, only: [:show, :download, :destroy]
 
   def index
     @report_lists = ReportList.all
   end
 
+
   def show
+
+
+    respond_to do |format|
+      format.csv { send_data @table_list.csv_string, filename: @table_list.csv_file_name, type: 'application/csv' }
+      format.pdf { send_data @table_list.to_pdf.render, filename: @table_list.pdf_file_name, type: 'application/pdf' }
+    end
+  end
+
+  def download
 
     send_file @report_list.file.to_io,
               filename: @report_list.file_filename,
@@ -13,7 +23,7 @@ class ReportListsController < OneReport::BaseController
   end
 
   def destroy
-    File.delete @export_file
+    @report_list.destroy
 
     redirect_to export_files_url, notice: 'Export file was successfully destroyed.'
   end
