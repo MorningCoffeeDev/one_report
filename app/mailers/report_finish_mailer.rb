@@ -1,7 +1,7 @@
 class ReportFinishMailer < ActionMailer::Base
   default from: "StudyTurf Notifications <notifications@studyturf.com.au>"
 
-  def processing_complete(id)
+  def finish_notice(id)
     @report_list = ReportList.find(id)
     @message = @report_list.notice_body
 

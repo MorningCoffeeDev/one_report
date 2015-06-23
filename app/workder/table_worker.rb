@@ -2,9 +2,9 @@ class TableWorker
   include Sidekiq::Worker
   sidekiq_options retry: false
 
-  def perform(table_list_id)
-    @table_list = TableList.find(table_list_id)
-    @table_list.one_report
+  def perform(report_list_id, report_name)
+    @report_list = ReportList.find(report_list_id)
+    @report_list.run(report_name)
   end
 
 end

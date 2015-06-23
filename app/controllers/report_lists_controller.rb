@@ -1,18 +1,22 @@
 class ReportListsController < OneReport::BaseController
   before_filter :set_report_list, only: [:show, :download, :destroy]
+  after_filter :set_reportable, only: [:new, :create, :show, :download]
 
-  def index
-    @report_lists = ReportList.all
+  def new
+    @report_list = ReportList.new(reportable_type: params[:reportable_type],
+                                  reportable_id: params[:reportable_id],
+                                  reportable_name: params[:reportable_name])
   end
 
+  def create
+    @report_list = ReportList.new(params)
+    TableWorker.perform_async(@report_list.id, :one_report)
+
+    redirect_to @report_list
+  end
 
   def show
 
-
-    respond_to do |format|
-      format.csv { send_data @table_list.csv_string, filename: @table_list.csv_file_name, type: 'application/csv' }
-      format.pdf { send_data @table_list.to_pdf.render, filename: @table_list.pdf_file_name, type: 'application/pdf' }
-    end
   end
 
   def download
@@ -32,6 +36,10 @@ class ReportListsController < OneReport::BaseController
   def set_report_list
     @report_list = ReportList.find params[:id]
     #@report_list = params[:id] + '.' + params[:format]
+  end
+
+  def set_reportable
+    @reportable = @report_list.reportable
   end
 
 end

@@ -5,8 +5,7 @@ class TableList < ActiveRecord::Base
   has_many :table_items
 
 
-  validates :headers, format: { with: /\n$/,
-                               message: "end with return" }
+  validates :headers, format: { with: /\n$/, message: "must end with return" }
 
   def to_pdf
     pdf = TablePdf.new
