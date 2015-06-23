@@ -21,7 +21,7 @@ module OneReport::Export
     @table_list.table_items.create(fields: row.to_csv)
   end
 
-  def execute(object, method, *args)
+  def execute(object, method, args)
     if method.is_a?(Symbol)
       result = object.send(method, *args)
     elsif method.is_a?(String)

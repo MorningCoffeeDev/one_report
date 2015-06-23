@@ -45,8 +45,12 @@ module OneReport::Import
       raise 'wrong header type'
     end
 
-    unless argument.nil?
+    if argument.nil?
+      nil  # todo use next ?
+    elsif argument.is_a?(Array)
       @arguments.merge!(name => argument)
+    else
+      raise 'wrong argument type'
     end
 
     self
