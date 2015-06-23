@@ -10,6 +10,7 @@ class OneReport::Base
   attr_reader :columns,
               :headers,
               :fields,
+              :arguments,
               :collection_model,
               :collection_scope
   attr_accessor :report_list_id
@@ -20,6 +21,7 @@ class OneReport::Base
     @columns = []
     @headers = {}
     @fields = {}
+    @arguments = {}
   end
 
   def report_list

@@ -20,4 +20,13 @@ class ReportList < ActiveRecord::Base
     report.to_table
   end
 
+  def combine_pdf
+    pdf_string = ''
+    table_lists.each do |table|
+      pdf_string  << table.to_pdf
+    end
+
+    pdf_string
+  end
+
 end

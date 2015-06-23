@@ -15,7 +15,7 @@ module OneReport::Import
   end
 
 
-  def column(name, field: nil, header: nil)
+  def column(name, field: nil, header: nil, argument: nil)
     unless name.is_a?(Symbol)
       raise 'must pass a symbol'
     end
@@ -43,6 +43,10 @@ module OneReport::Import
       @headers.merge!(name => header)
     else
       raise 'wrong header type'
+    end
+
+    unless argument.nil?
+      @arguments.merge!(name => argument)
     end
 
     self
