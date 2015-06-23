@@ -22,14 +22,6 @@ class OneReport::Base
     @fields = {}
   end
 
-  def run(report_name)
-    reportable.send(report_name)
-  end
-
-  def reportable
-    report_list.reportable
-  end
-
   def report_list
     @report_list = ReportList.find(report_list_id)
   end

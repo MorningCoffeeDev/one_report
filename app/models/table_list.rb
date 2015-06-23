@@ -4,7 +4,6 @@ class TableList < ActiveRecord::Base
   belongs_to :report_list
   has_many :table_items
 
-
   validates :headers, format: { with: /\n$/, message: "must end with return" }
 
   def to_pdf

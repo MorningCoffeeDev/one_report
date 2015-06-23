@@ -8,7 +8,7 @@ module OneReport::Export
       export_row(object)
     end
 
-    ReportFinishMailer.processing_complete(report_list_id).deliver
+    ReportFinishMailer.finish_notify(report_list_id).deliver
   end
 
   def export_row(object)
