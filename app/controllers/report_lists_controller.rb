@@ -9,10 +9,12 @@ class ReportListsController < OneReport::BaseController
   end
 
   def create
-    @report_list = ReportList.new(params)
+    @report_list = ReportList.new(params[:report_list])
+    @report_list.save
+
     TableWorker.perform_async(@report_list.id, :one_report)
 
-    redirect_to @report_list
+    redirect_to report_list_table_lists_url(@report_list.id)
   end
 
   def show
