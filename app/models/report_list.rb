@@ -23,10 +23,14 @@ class ReportList < ActiveRecord::Base
   def combine_pdf
     pdf_string = ''
     table_lists.each do |table|
-      pdf_string  << table.to_pdf
+      pdf_string  << table.to_pdf.render
     end
 
     pdf_string
+  end
+
+  def pdf_file_name
+    "report_#{self.id}.pdf"
   end
 
 end

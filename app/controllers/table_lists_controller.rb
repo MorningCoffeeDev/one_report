@@ -1,6 +1,6 @@
 class TableListsController < OneReport::BaseController
   before_filter :set_report_list
-  before_filter :set_table_list, only: [:show, :destroy]
+  before_filter :set_table_list, only: [:show]
 
   def index
     @table_lists = @report_list.table_lists

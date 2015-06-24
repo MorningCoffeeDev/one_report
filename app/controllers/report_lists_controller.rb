@@ -1,5 +1,5 @@
 class ReportListsController < OneReport::BaseController
-  before_filter :set_report_list, only: [:show, :download, :destroy]
+  before_filter :set_report_list, only: [:show, :combine, :download, :destroy]
   after_filter :set_reportable, only: [:new, :create, :show, :download]
 
   def new
@@ -17,6 +17,12 @@ class ReportListsController < OneReport::BaseController
 
   def show
 
+  end
+
+  def combine
+    send_data @report_list.combine_pdf,
+              filename: @report_list.pdf_file_name,
+              type: 'application/pdf'
   end
 
   def download
