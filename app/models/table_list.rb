@@ -12,6 +12,16 @@ class TableList < ActiveRecord::Base
     pdf
   end
 
+  def to_row_pdf
+    pdf = TablesPdf.new
+    self.table_items.each do |item|
+      pdf.table item.csv_array
+      pdf.start_new_page
+    end
+
+    pdf
+  end
+
   def csv_array
     csv = []
     csv << CSV.parse_line(self.headers)

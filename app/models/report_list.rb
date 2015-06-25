@@ -21,29 +21,25 @@ class ReportList < ActiveRecord::Base
     end
   end
 
-  def each_row_pdf
-
-  end
-
   def combine_pdf
     pdf = TablesPdf.new
 
-    table_lists.includes(:table_items).each do |table|
+    table_lists.includes(:table_items).each_with_index do |table, index|
+      pdf.start_new_page unless index == 0
       pdf.table table.csv_array
-      pdf.start_new_page
     end
 
-    pdf
-  end
-
-  def to_pdf
-    pdf = TablePdf.new
-    pdf.table(csv_array)
     pdf
   end
 
   def pdf_file_name
     "report_#{self.id}.pdf"
   end
+
+  def temp_file_name
+    "PersonalResponsibility #{reportable.student.code} - #{reportable.ausvels_period.year} Semester #{reportable.ausvels_period.semester}.pdf"
+  end
+
+
 
 end

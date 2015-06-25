@@ -2,10 +2,10 @@ class TablePdf < Prawn::Document
 
 
   def initialize
-    super
-    #super(page_size: "A4", margin: 3.cm)
-
-
+    default = {
+      page_size: 'A4'
+    }
+    super(default)
   end
 
 

@@ -19,7 +19,7 @@ module OneReport
                             reportable_id: self.id,
                             reportable_name: reportable_name).first
 
-      unless rl.blank?
+      if rl.blank?
         rl = ReportList.create(reportable_type: self.class.name,
                                reportable_id: self.id,
                                reportable_name: reportable_name)

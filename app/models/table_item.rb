@@ -4,4 +4,18 @@ class TableItem < ActiveRecord::Base
 
   validates :fields, format: { with: /\n$/, message: "must end with return" }
 
+
+  def to_pdf
+
+
+
+  end
+
+  def csv_array
+    csv = []
+    csv << CSV.parse_line(self.table_list.headers)
+    csv << CSV.parse_line(self.fields)
+    csv
+  end
+
 end
