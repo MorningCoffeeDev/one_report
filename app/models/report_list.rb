@@ -28,8 +28,8 @@ class ReportList < ActiveRecord::Base
 
   def temp_header_info
     [
-      ['Surf Coast Secondary College', reportable.student.person.name],
-      ['Personal Responsibility Report', 'Year 2015 Semester 1']
+      ['Surf Coast Secondary College', reportable.student.person.full_name],
+      ['Personal Responsibility Report', 'Semester 1, 2015']
     ]
 
   end

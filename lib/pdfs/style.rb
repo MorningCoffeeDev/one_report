@@ -44,7 +44,7 @@ module OneReport
           background_color: 'eeeeee',
           align: :center,
           valign: :center,
-          size: 8,
+          size: 12,
           font_style: :bold
         }
 
