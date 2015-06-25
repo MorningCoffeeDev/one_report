@@ -1,19 +1,27 @@
 require 'pdfs/table_pdf'
 class TableList < ActiveRecord::Base
-
+  attr_writer :pdf, :table
   belongs_to :report_list
   has_many :table_items
 
   validates :headers, format: { with: /\n$/, message: "must end with return" }
 
+  def pdf
+    @pdf ||= TablePdf.new
+  end
+
+  def table
+    @table ||= []
+  end
+
   def to_pdf
-    pdf = TablePdf.new
-    pdf.table(csv_array)
+    csv_headers
+    csv_fields
+    pdf.table(table)
     pdf
   end
 
   def to_row_pdf
-    pdf = TablesPdf.new
     self.table_items.each do |item|
       pdf.table item.csv_array
       pdf.start_new_page
@@ -22,16 +30,19 @@ class TableList < ActiveRecord::Base
     pdf
   end
 
-  def csv_array
-    csv = []
-    csv << CSV.parse_line(self.headers)
+  def csv_headers
+    csv = CSV.parse_line(self.headers)
+    table << pdf.process_header_row(csv)
+  end
+
+  def csv_fields
     self.table_items.each do |item|
       begin
-        csv << CSV.parse_line(item.fields)
+        csv = CSV.parse_line(item.fields)
+        table << pdf.process_result_row(csv)
       rescue
       end
     end
-    csv
   end
 
   def csv_string

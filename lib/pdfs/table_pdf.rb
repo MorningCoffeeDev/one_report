@@ -1,5 +1,6 @@
+require 'pdfs/style'
 class TablePdf < Prawn::Document
-
+  include OneReport::Pdf::Style
 
   def initialize
     default = {
@@ -7,7 +8,5 @@ class TablePdf < Prawn::Document
     }
     super(default)
   end
-
-
 
 end
