@@ -1,3 +1,4 @@
+require 'pdfs/tables_pdf'
 class ReportList < ActiveRecord::Base
   attr_accessible :reportable_id,
                   :reportable_type,
@@ -21,12 +22,20 @@ class ReportList < ActiveRecord::Base
   end
 
   def combine_pdf
-    pdf_string = ''
+    pdf = TablesPdf.new
+
     table_lists.each do |table|
-      pdf_string  << table.to_pdf.render
+      pdf.table table.csv_array
+      pdf.start_new_page
     end
 
-    pdf_string
+    pdf
+  end
+
+  def to_pdf
+    pdf = TablePdf.new
+    pdf.table(csv_array)
+    pdf
   end
 
   def pdf_file_name

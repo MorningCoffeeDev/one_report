@@ -12,7 +12,7 @@ class ReportListsController < OneReport::BaseController
     @report_list = ReportList.new(params[:report_list])
     @report_list.save
 
-    TableWorker.perform_async(@report_list.id, :one_report)
+    TableWorker.perform_async(@report_list.id)
 
     redirect_to report_list_table_lists_url(@report_list.id)
   end
@@ -22,7 +22,7 @@ class ReportListsController < OneReport::BaseController
   end
 
   def combine
-    send_data @report_list.combine_pdf,
+    send_data @report_list.combine_pdf.render,
               filename: @report_list.pdf_file_name,
               type: 'application/pdf'
   end
