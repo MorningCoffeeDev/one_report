@@ -57,7 +57,7 @@ class ReportList < ActiveRecord::Base
   end
 
   def temp_file_name
-    "PersonalResponsibility #{reportable.student.code} - #{reportable.ausvels_period.year} Semester #{reportable.ausvels_period.semester}.pdf"
+    "#{self.id}-PersonalResponsibility #{reportable.student.code} - #{reportable.ausvels_period.year} Semester #{reportable.ausvels_period.semester}.pdf"
   end
 
 
