@@ -16,15 +16,19 @@ class ReportList < ActiveRecord::Base
   validates :reportable_name, presence: true
 
   def run
-    report = reportable.public_send(reportable_name)
-    report.report_list_id = self.id
-    report.to_table
+    unless self.done
+      reportable.public_send(reportable_name)
+    end
+  end
+
+  def each_row_pdf
+
   end
 
   def combine_pdf
     pdf = TablesPdf.new
 
-    table_lists.each do |table|
+    table_lists.includes(:table_items).each do |table|
       pdf.table table.csv_array
       pdf.start_new_page
     end

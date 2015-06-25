@@ -16,7 +16,10 @@ class TableList < ActiveRecord::Base
     csv = []
     csv << CSV.parse_line(self.headers)
     self.table_items.each do |item|
-      csv << CSV.parse_line(item.fields)
+      begin
+        csv << CSV.parse_line(item.fields)
+      rescue
+      end
     end
     csv
   end

@@ -2,6 +2,10 @@ class ReportListsController < OneReport::BaseController
   before_filter :set_report_list, only: [:show, :combine, :download, :destroy]
   after_filter :set_reportable, only: [:new, :create, :show, :download]
 
+  def reportable
+
+  end
+
   def new
     @report_list = ReportList.new(reportable_type: params[:reportable_type],
                                   reportable_id: params[:reportable_id],
