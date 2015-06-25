@@ -4,10 +4,21 @@ module OneReport
   module Pdf
     module Style
 
+      def repeat_header(data)
+
+        repeat :all do
+          move_down 20
+          bounding_box [bounds.left, bounds.top], :width  => bounds.width do
+            process_header(data)
+            move_down 20
+          end
+        end
+      end
+
       def process_header(data, options={}, &block)
         default_options = {
           cell_style: { borders: [] },
-          column_widths: [225,200]
+          column_widths: [260, 260]
         }
 
         default_options.merge!(options)

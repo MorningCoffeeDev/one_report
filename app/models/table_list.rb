@@ -15,8 +15,8 @@ class TableList < ActiveRecord::Base
   end
 
   def to_pdf
-    csv_headers
-    csv_fields
+    table << pdf.process_header_row(csv_headers)
+    pdf_fields
     pdf.table(table)
     pdf
   end
@@ -31,11 +31,21 @@ class TableList < ActiveRecord::Base
   end
 
   def csv_headers
-    csv = CSV.parse_line(self.headers)
-    table << pdf.process_header_row(csv)
+    CSV.parse_line(self.headers)
   end
 
   def csv_fields
+    csv = []
+    self.table_items.each do |item|
+      begin
+        csv << CSV.parse_line(item.fields)
+      rescue
+      end
+    end
+    csv
+  end
+
+  def pdf_fields
     self.table_items.each do |item|
       begin
         csv = CSV.parse_line(item.fields)

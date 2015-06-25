@@ -1,5 +1,6 @@
 require 'pdfs/tables_pdf'
 class ReportList < ActiveRecord::Base
+  attr_writer :pdf
   attr_accessible :reportable_id,
                   :reportable_type,
                   :reportable_name,
@@ -15,18 +16,37 @@ class ReportList < ActiveRecord::Base
   validates :reportable_type, presence: true
   validates :reportable_name, presence: true
 
+  def pdf
+    @pdf ||= TablePdf.new
+  end
+
   def run
     unless self.done
       reportable.public_send(reportable_name)
     end
   end
 
+  def temp_header_info
+    [
+      ['Surf Coast Secondary College', reportable.student.person.name],
+      ['Personal Responsibility Report', 'Year 2015 Semester 1']
+    ]
+
+  end
+
   def combine_pdf
     pdf = TablesPdf.new
 
-    table_lists.includes(:table_items).each_with_index do |table, index|
+    pdf.process_header temp_header_info
+
+    table_lists.includes(:table_items).each_with_index do |value, index|
+      table = []
       pdf.start_new_page unless index == 0
-      pdf.table table.csv_array
+      table << pdf.process_header_row(value.csv_headers)
+      value.csv_fields.each do |c|
+        table << pdf.process_result_row(c)
+      end
+      pdf.table table
     end
 
     pdf
