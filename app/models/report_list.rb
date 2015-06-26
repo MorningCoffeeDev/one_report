@@ -28,8 +28,8 @@ class ReportList < ActiveRecord::Base
 
   def temp_header_info
     [
-      ['Surf Coast Secondary College', reportable.student.person.full_name],
-      ['Personal Responsibility Report', 'Semester 1, 2015']
+      ['', reportable.student.person.full_name],
+      ['Learning Conference Report', 'Semester 1, 2015']
     ]
 
   end
@@ -57,7 +57,7 @@ class ReportList < ActiveRecord::Base
   end
 
   def temp_file_name
-    "#{self.id}-PersonalResponsibility #{reportable.student.code} - #{reportable.ausvels_period.year} Semester #{reportable.ausvels_period.semester}.pdf"
+    "#{self.id}-PersonalResponsibility #{reportable.student.code} - #{2015} Semester #{1}.pdf"
   end
 
 
