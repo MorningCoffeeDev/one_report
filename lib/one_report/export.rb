@@ -1,8 +1,8 @@
 module OneReport::Export
 
   def to_table
-    @table_list = report_list.table_lists.create
-    @table_list.update_attributes(headers: header_values.to_csv)
+    @table_list = TableList.create(report_list_id: report_list_id,
+                                   headers: header_values.to_csv)
 
     collection_result.each do |object|
       export_row(object)

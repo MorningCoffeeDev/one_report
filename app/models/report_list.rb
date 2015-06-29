@@ -22,9 +22,13 @@ class ReportList < ActiveRecord::Base
 
   def run
     unless self.done
-      reportable.public_send(reportable_name)
+      reportable.one_report(reportable_name)
+      TableWorker.perform_async(self.id)
     end
   end
+
+
+
 
   def temp_header_info
     [

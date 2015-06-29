@@ -1,9 +1,11 @@
 require 'csv'
+require 'active_support/concern'
 require 'one_report/config'
 require 'one_report/import'
 require 'one_report/export'
 
 class OneReport::Base
+  extend ActiveSupport::Concern
   include OneReport::Import
   include OneReport::Export
 
@@ -12,20 +14,17 @@ class OneReport::Base
               :fields,
               :arguments,
               :collection_model,
-              :collection_scope
-  attr_accessor :report_list_id
+              :collection_scope,
+              :model,
+              :report_list_id
 
-  def initialize
-    @collection_model = nil
+  def initialize(report_list_id)
+    @report_list_id = report_list_id
     @collection_scope = []
     @columns = []
     @headers = {}
     @fields = {}
     @arguments = {}
-  end
-
-  def report_list
-    @report_list = ReportList.find(report_list_id)
   end
 
   def collection_result
@@ -44,6 +43,17 @@ class OneReport::Base
 
   def field_values
     @field_values = fields.values_at(*columns)
+  end
+
+  module ClassMethods
+
+    def to_table(*args)
+      report_list_id = args.shift
+      report = OneReport::Base.new(report_list_id)
+      report.config(*args)
+      report.to_table
+    end
+
   end
 
 end

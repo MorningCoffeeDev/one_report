@@ -1,31 +1,28 @@
 require 'one_report/engine'
 require 'one_report/base'
+require 'active_support/concern'
 
 module OneReport
   module Model
+    extend ActiveSupport::Concern
 
-    def generate_report_later(reportable_name)
-      report_list = generate_report(reportable_name)
-      TableWorker.perform_async(report_list.id)
+    included do
+      has_one :report_list, as: :reportable
+      has_many :report_lists, as: :reportable
     end
 
-    def generate_report_now(reportable_name)
-      generate_report(reportable_name)
-      report_list.run
-    end
+    module ClassMethods
 
-    def generate_report(reportable_name)
-      rl = ReportList.where(reportable_type: self.class.name,
-                            reportable_id: self.id,
-                            reportable_name: reportable_name).first
+      def define_report(name)
 
-      if rl.blank?
-        rl = ReportList.create(reportable_type: self.class.name,
-                               reportable_id: self.id,
-                               reportable_name: reportable_name)
+        define_method "#{name}_id" do
+          self.report_lists.find_or_create_by_reportable_name(name).id
+        end
+
       end
-      rl
+
     end
+
 
   end
 end
