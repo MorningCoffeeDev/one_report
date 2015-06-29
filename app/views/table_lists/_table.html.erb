@@ -1,0 +1,19 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <% table_list.csv_headers.each do |header| %>
+      <td><%= header %></td>
+    <% end %>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% table_list.table_items.each do |item| %>
+    <tr>
+      <% item.csv_fields.each do |field| %>
+        <td><%= field %></td>
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

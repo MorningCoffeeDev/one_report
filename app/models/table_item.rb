@@ -11,6 +11,10 @@ class TableItem < ActiveRecord::Base
 
   end
 
+  def csv_fields
+    CSV.parse_line(fields)
+  end
+
   def csv_array
     csv = []
     csv << CSV.parse_line(self.table_list.headers)
