@@ -1,12 +1,14 @@
 # OneReport
-OneReport is used to generate a table report, It can format to csv, pdf
+OneReport is used to generate report, It can format to csv, pdf or other format
 
 ## Features
 - Easy to use, Just config it;
+- Separate pdf style and data;
 - Strong, even data processing break off, It can be restore easily;
 
 ## Functions
 - sidekiq job;
+- report file store;
 - send email notice user after finished sidekiq job;
 
 ## Usage
@@ -17,10 +19,11 @@ Consider a table, It's as:
 
 So, just to config them:
 
-### First, Instance a OneReport object
+### First, define a subclass inherit from OneReport::Base
 
 ```ruby
-report = OneReport::Base.new
+class ExampleTable < OneReport::Base
+end
 ```
 
 ### Config Collections
@@ -29,9 +32,14 @@ report = OneReport::Base.new
 
 ```ruby
 # consider a User model
-size = 100
-User.class_eval do
-  scope :one_report_scope, -> { limit(size) }
+class ExampleTable < OneReport::Base
+
+  def config(size)
+    User.class_eval do
+      scope :one_report_scope, -> { limit(size) }
+    end
+  end
+  
 end
 ````
 
@@ -41,10 +49,10 @@ end
 
 ```ruby
 # with one scope
-report.collect User, :all
+collect User, :all
 
 # with more scope, notice that the scope will be called orderly
-report.collect User, :all, :one_report_scope
+collect User, :all, :one_report_scope
 ```
 
 ### Config Each Column
@@ -54,13 +62,13 @@ report.collect User, :all, :one_report_scope
 # with default header and default field method
 # default header use 'titleize' method to format
 # default field method equal column's name
-report.column :name
+column :name
 
 # with assigned header and default field method
-report.column :name, header: 'My name'
+column :name, header: 'My name'
 
 # with assigned header and assigned field method 
-report.column :name, header: 'My name', field: -> { name }
+column :name, header: 'My name', field: -> { name }
 ```
 
 **notice: the order it important, all columns order by It's defined order**
