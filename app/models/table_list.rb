@@ -10,6 +10,10 @@ class TableList < ActiveRecord::Base
     @pdf ||= TablePdf.new
   end
 
+  def brothers
+    self.class.where(report_list_id: self.report_list_id)
+  end
+
   def table
     @table ||= []
   end

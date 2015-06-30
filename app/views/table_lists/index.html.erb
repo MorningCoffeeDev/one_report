@@ -1,3 +1,5 @@
+<section>
+
 <ul class="breadcrumb">
   <li><%= link_to 'back', :back %></li>
 </ul>
@@ -6,25 +8,14 @@
   <h1>Preview</h1>
 </div>
 
+<div class="pagination pagination-centered">
+  <ul>
+    <% @table_lists.each_with_index do |table, index| %>
+      <li><%= link_to index+1, report_list_table_list_path(@report_list, table) %></li>
+    <% end %>
+  </ul>
+</div>
 
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th colspan="3"></th>
-  </tr>
-  </thead>
+<%= render partial: 'table', locals: { table_list: @table_lists.first } %>
 
-  <tbody>
-  <% @table_lists.each do |table_list| %>
-    <tr>
-      <td><%= table_list.id %></td>
-      <td><%= link_to 'Download Csv', report_list_table_list_path(@report_list, table_list, format: 'csv') %></td>
-      <td><%= link_to 'Download Pdf', report_list_table_list_path(@report_list, table_list, format: 'pdf') %></td>
-      <td><%= link_to 'Download row Pdf', row_report_list_table_list_path(@report_list, table_list, format: 'pdf') %></td>
-      <td><%= link_to 'destroy', report_list_table_list_path(@report_list, table_list), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
-
+</section>
