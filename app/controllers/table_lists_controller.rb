@@ -6,10 +6,6 @@ class TableListsController < OneReport::BaseController
     @table_lists = @report_list.table_lists
   end
 
-  def combine
-    @table_lists = @report_list.part_table_lists
-  end
-
   def show
 
     respond_to do |format|
@@ -28,7 +24,7 @@ class TableListsController < OneReport::BaseController
 
   private
   def set_table_list
-    @table_list = TableList.find(params[:id])
+    @table_list = @report_list.table_lists.find(params[:id])
   end
 
   def set_report_list

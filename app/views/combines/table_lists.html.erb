@@ -11,11 +11,11 @@
 <div class="pagination pagination-centered">
   <ul>
     <% @table_lists.each_with_index do |table, index| %>
-      <li><%= link_to index+1, report_list_table_list_path(@report_list, table) %></li>
+      <li><%= link_to index+1, report_list_table_list_path(table.report_list, table) %></li>
     <% end %>
   </ul>
 </div>
 
-<%= render partial: 'table', locals: { table_list: @table_lists.first } %>
+<%= render partial: 'table_lists/table', locals: { table_list: @table_lists.first } %>
 
 </section>

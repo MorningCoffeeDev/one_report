@@ -1,5 +1,5 @@
 class ReportListsController < OneReport::BaseController
-  before_filter :set_report_list, only: [:show, :combine, :download, :destroy]
+  before_filter :set_report_list, only: [:show, :download, :destroy]
   after_filter :set_reportable, only: [:new, :create, :show, :download]
 
   def reportable
@@ -25,15 +25,8 @@ class ReportListsController < OneReport::BaseController
 
     respond_to do |format|
       format.html
-      format.csv { send_data @table_list.csv_string, filename: @table_list.csv_file_name, type: 'application/csv' }
-      format.pdf { send_data @table_list.to_pdf.render, filename: @table_list.pdf_file_name, type: 'application/pdf' }
+      format.pdf { send_data @report_list.combine_pdf.render, filename: @report_list.filename, type: 'application/pdf' }
     end
-  end
-
-  def combine
-    send_data @report_list.combine_pdf.render,
-              filename: @report_list.filename,
-              type: 'application/pdf'
   end
 
   def download

@@ -23,6 +23,16 @@ module OneReport
 
     end
 
+  end
+
+  module Combine
+    extend ActiveSupport::Concern
+
+    included do
+      has_one :combine, as: :reportable
+      has_many :combines, as: :reportable
+    end
+
 
   end
 end
