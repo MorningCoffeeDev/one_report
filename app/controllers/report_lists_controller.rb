@@ -32,12 +32,11 @@ class ReportListsController < OneReport::BaseController
 
   def combine
     send_data @report_list.combine_pdf.render,
-              filename: @report_list.pdf_file_name,
+              filename: @report_list.filename,
               type: 'application/pdf'
   end
 
   def download
-
     send_file @report_list.file.to_io,
               filename: @report_list.file_filename,
               type: @report_list.file_content_type
@@ -45,14 +44,12 @@ class ReportListsController < OneReport::BaseController
 
   def destroy
     @report_list.destroy
-
-    redirect_to export_files_url, notice: 'Export file was successfully destroyed.'
+    redirect_to report_lists_url, notice: 'Export file was successfully destroyed.'
   end
 
   private
   def set_report_list
     @report_list = ReportList.find params[:id]
-    #@report_list = params[:id] + '.' + params[:format]
   end
 
   def set_reportable

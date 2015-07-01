@@ -1,6 +1,5 @@
 require 'pdfs/tables_pdf'
 class ReportList < ActiveRecord::Base
-  attr_writer :pdf
   attr_accessible :reportable_id,
                   :reportable_type,
                   :reportable_name,
@@ -21,10 +20,6 @@ class ReportList < ActiveRecord::Base
   validates :reportable_name, presence: true
 
   after_create :add_to_worker
-
-  def pdf
-    @pdf ||= TablePdf.new
-  end
 
   def has_parts?
     parts.exists?
@@ -47,7 +42,7 @@ class ReportList < ActiveRecord::Base
   def combine_pdf
     pdf = TablesPdf.new
 
-    pdf.process_header temp_header_info
+    pdf.process_header header_info
 
     table_lists.includes(:table_items).each_with_index do |value, index|
       table = []
@@ -62,24 +57,28 @@ class ReportList < ActiveRecord::Base
     pdf
   end
 
-  def file_filename
-    filename = super
+  def filename(extension = 'pdf')
+    filename = file_filename
     if filename
       filename
+    elsif reportable.respond_to?(:filename)
+      filename = reportable.filename
     else
-      "report_#{self.id}.pdf"
+      filename = "report_#{self.id}"
     end
+
+    filename << '.' << extension unless filename.end_with?(extension)
   end
 
-  def temp_header_info
-    [
-      ['', reportable.student.person.full_name],
-      ['Learning Conference Report', 'Semester 1, 2015']
-    ]
-  end
-
-  def temp_file_name
-    "#{self.id}-PersonalResponsibility #{reportable.student.code} - #{2015} Semester #{1}.pdf"
+  def header_info
+    if reportable.respond_to? :header_info
+      reportable.header_info
+    else
+      [
+        ['', ''],
+        ['', '']
+      ]
+    end
   end
 
 end

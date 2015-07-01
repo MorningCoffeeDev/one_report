@@ -28,7 +28,7 @@ class TableListsController < OneReport::BaseController
 
   private
   def set_table_list
-    @table_list = @report_list.table_lists.find(params[:id])
+    @table_list = TableList.find(params[:id])
   end
 
   def set_report_list
