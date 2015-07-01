@@ -12,4 +12,8 @@ class Combine < ActiveRecord::Base
   has_many :report_lists, through: :combine_report_lists
   has_many :table_lists, through: :report_lists
 
+  validates :reportable_id, presence: true
+  validates :reportable_type, presence: true
+  validates :reportable_name, presence: true
+
 end

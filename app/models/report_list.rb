@@ -22,13 +22,12 @@ class ReportList < ActiveRecord::Base
   def run
     unless self.done
       reportable.public_send(reportable_name)
+      ReportFinishMailer.finish_notify(self.id).deliver if self.notice_email.present?
     end
   end
 
   def add_to_worker
     TableWorker.perform_async(self.id)
   end
-
-
 
 end

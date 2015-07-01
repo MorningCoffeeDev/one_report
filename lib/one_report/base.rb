@@ -13,7 +13,6 @@ class OneReport::Base
               :arguments,
               :collection_model,
               :collection_scope,
-              :model,
               :report_list_id
 
   def initialize(report_list_id)
