@@ -2,7 +2,7 @@ require 'pdfs/table_pdf'
 class TableList < ActiveRecord::Base
   attr_writer :pdf, :table
   belongs_to :report_list
-  has_many :table_items
+  has_many :table_items, dependent: :destroy
 
   validates :headers, format: { with: /\n$/, message: "must end with return" }
 

@@ -10,7 +10,7 @@ class ReportList < ActiveRecord::Base
 
   belongs_to :reportable, polymorphic: true
   has_one :table_list
-  has_many :table_lists
+  has_many :table_lists, dependent: :destroy
   has_many :table_items, through: :table_lists
 
   validates :reportable_id, presence: true
