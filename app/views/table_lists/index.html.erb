@@ -16,6 +16,8 @@
   </ul>
 </div>
 
-<%= render partial: 'table', locals: { table_list: @table_lists.first } %>
+<% if @table_lists.first.present? %>
+  <%= render partial: 'table', locals: { table_list: @table_lists.first } %>
+<% end %>
 
 </section>
