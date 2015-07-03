@@ -1,10 +1,12 @@
 require 'pdfs/style'
+require 'prawn/measurement_extensions'
 class TablePdf < Prawn::Document
   include ReportPdf::Style
 
   def initialize
     default = {
-      page_size: 'A4'
+      page_size: 'A4',
+      margin: 2.6.cm
     }
     super(default)
   end

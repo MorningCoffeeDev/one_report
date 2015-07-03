@@ -1,7 +1,7 @@
 require 'one_report/engine'
 require 'one_report/base'
 require 'active_support/concern'
-
+require 'pdfs/table_pdf'
 
 module OneReport
   module Model
