@@ -1,19 +1,19 @@
-require 'pdfs/tables_pdf'
+require 'pdfs/table_pdf'
 module ReportPdf
 
   def combine_pdf
-    pdf = TablesPdf.new
+    pdf = TablePdf.new
 
-    pdf.process_header header_info
+    pdf.repeat_header header_info
 
     table_lists.includes(:table_items).each_with_index do |value, index|
-      table = []
       pdf.start_new_page unless index == 0
-      table << pdf.process_header_row(value.csv_headers)
-      value.csv_fields.each do |c|
-        table << pdf.process_result_row(c)
+      table = []
+      table << value.csv_headers
+      value.csv_fields.each do |row|
+        table << row
       end
-      pdf.table table
+      pdf.pdf_table table
     end
 
     pdf

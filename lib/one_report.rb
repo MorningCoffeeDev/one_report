@@ -2,6 +2,7 @@ require 'one_report/engine'
 require 'one_report/base'
 require 'active_support/concern'
 
+
 module OneReport
   module Model
     extend ActiveSupport::Concern
