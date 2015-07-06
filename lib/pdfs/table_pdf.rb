@@ -5,7 +5,7 @@ class TablePdf < Prawn::Document
   def initialize
     default = {
       page_size: 'A4',
-      margin: 2.6.cm
+      margin: 75
     }
     super(default)
   end
@@ -30,9 +30,17 @@ class TablePdf < Prawn::Document
   def repeat_header(data)
 
     repeat :all do
-      process_header(data)
+      canvas do
+        bounding_box [bounds.left+75, bounds.top-20], :width  => bounds.width do
+          process_header(data)
+        end
+      end
     end
 
+  end
+
+  def repeat_footer
+    number_pages "<page> / <total>", at: [bounds.right - 50, 0]
   end
 
   def process_header(data, options={}, &block)
@@ -55,7 +63,7 @@ class TablePdf < Prawn::Document
       end
     end
 
-    move_down 20
+    move_down 50
   end
 
 

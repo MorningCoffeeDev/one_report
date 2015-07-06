@@ -15,6 +15,7 @@ module ReportPdf
       pdf.custom_table table
     end
 
+    pdf.repeat_footer
     pdf
   end
 
