@@ -30,4 +30,8 @@ class ReportList < ActiveRecord::Base
     TableWorker.perform_async(self.id)
   end
 
+  def table_items_count
+    table_lists.sum(:table_items_count)
+  end
+
 end

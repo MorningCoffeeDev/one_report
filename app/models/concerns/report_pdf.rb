@@ -1,8 +1,7 @@
-require 'pdfs/table_pdf'
 module ReportPdf
 
   def combine_pdf
-    pdf = TablePdf.new
+    pdf = pdf_class.new
 
     pdf.repeat_header header_info
 
@@ -13,10 +12,18 @@ module ReportPdf
       value.csv_fields.each do |row|
         table << row
       end
-      pdf.pdf_table table
+      pdf.custom_table table
     end
 
     pdf
+  end
+
+  def pdf_class
+    if reportable.respond_to?(:pdf_class)
+      reportable.pdf_class
+    else
+      TablePdf
+    end
   end
 
   def filename(extension = 'pdf')
