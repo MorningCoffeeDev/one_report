@@ -8,8 +8,8 @@ module OneReport
     extend ActiveSupport::Concern
 
     included do
-      has_one :report_list, as: :reportable
-      has_many :report_lists, as: :reportable
+      has_one :report_list, as: :reportable, dependent: :destroy
+      has_many :report_lists, as: :reportable, dependent: :destroy
     end
 
     module ClassMethods
