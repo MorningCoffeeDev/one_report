@@ -11,7 +11,9 @@ class TablePdf < Prawn::Document
   end
 
   def custom_table(data, options={}, &block)
-    default_options = { }
+    default_options = {
+      position: :center
+    }
     default_options.merge!(options)
     th_style = style(:th)
     td_style = style(:td)
