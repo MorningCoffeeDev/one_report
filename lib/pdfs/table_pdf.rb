@@ -101,3 +101,11 @@ class TablePdf < Prawn::Document
   end
 
 end
+
+class  Prawn::Document
+
+  def empty?
+    page.content.stream.length <= 2
+  end
+
+end

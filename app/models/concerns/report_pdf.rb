@@ -1,7 +1,9 @@
 module ReportPdf
 
   def combine_pdf
-    pdf = pdf_class.new
+    pdf = pdf_object
+
+    return pdf unless pdf.empty?
 
     pdf.repeat_header header_info
 
@@ -19,11 +21,11 @@ module ReportPdf
     pdf
   end
 
-  def pdf_class
-    if reportable.respond_to?(:pdf_class)
-      reportable.pdf_class
+  def pdf_object
+    if reportable.respond_to?(:pdf_object)
+      reportable.pdf_object
     else
-      TablePdf
+      TablePdf.new
     end
   end
 
