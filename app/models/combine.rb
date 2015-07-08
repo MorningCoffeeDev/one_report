@@ -14,6 +14,5 @@ class Combine < ActiveRecord::Base
 
   validates :reportable_id, presence: true
   validates :reportable_type, presence: true
-  validates :reportable_name, presence: true
 
 end

@@ -15,7 +15,6 @@ class ReportList < ActiveRecord::Base
 
   validates :reportable_id, presence: true
   validates :reportable_type, presence: true
-  validates :reportable_name, presence: true
 
   after_create :add_to_worker
 
