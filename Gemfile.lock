@@ -55,6 +55,8 @@ GEM
       tzinfo (~> 1.1)
     arel (6.0.0)
     builder (3.2.2)
+    combine_pdf (0.2.2)
+      ruby-rc4 (>= 0.1.5)
     domain_name (0.5.24)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
@@ -109,6 +111,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
+    ruby-rc4 (0.1.5)
     sinatra (1.4.6)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -132,5 +135,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  combine_pdf
   one_report!
   refile!

@@ -17,13 +17,12 @@ class Combine < ActiveRecord::Base
 
 
   def merged_pdf
-    pdf = Prawn::Document.new
-    report_lists.each_with_index do |list, index|
-      pdf.start_new_page unless index == 0
-      pdf.page.content << list.combine_pdf.page.content.stream.filtered_stream
+    pdf = CombinePDF.new
+    report_lists.each do |list|
+      pdf << CombinePDF.parse(list.combine_pdf.render)
     end
 
-    pdf.render
+    pdf.to_pdf
   end
 
 end
