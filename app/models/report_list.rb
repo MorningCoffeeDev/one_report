@@ -21,7 +21,7 @@ class ReportList < ActiveRecord::Base
   def run
     unless self.done
       reportable.public_send(reportable_name)
-      self.update_attributs(done: true)
+      self.update_attributes(done: true)
       ReportFinishMailer.finish_notify(self.id).deliver if self.notice_email.present?
     end
   end
