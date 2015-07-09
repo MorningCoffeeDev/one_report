@@ -4,7 +4,8 @@ class ReportList < ActiveRecord::Base
   attr_accessible :reportable_id,
                   :reportable_type,
                   :reportable_name,
-                  :notice_email
+                  :notice_email,
+                  :done
 
   attachment :file
 
