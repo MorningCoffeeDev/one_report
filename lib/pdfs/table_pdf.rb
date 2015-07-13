@@ -1,13 +1,15 @@
 require 'pdfs/config'
 require 'prawn/measurement_extensions'
-class TablePdf < Prawn::Document
+class TablePdf
+  include Prawn::View
 
-  def initialize
+  def document
     default = {
       page_size: 'A4',
       margin: 75
     }
-    super(default)
+
+    @document ||= Prawn::Document.new(default)
   end
 
   def custom_table(data, options={}, &block)
