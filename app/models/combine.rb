@@ -15,6 +15,7 @@ class Combine < ActiveRecord::Base
   validates :reportable_id, presence: true
   validates :reportable_type, presence: true
 
+  after_create :add_to_worker
 
   def merged_pdf
     pdf = CombinePDF.new
@@ -23,6 +24,10 @@ class Combine < ActiveRecord::Base
     end
 
     pdf.to_pdf
+  end
+
+  def add_to_worker
+    CombineWorker.perform_in(500, self.id)
   end
 
 end

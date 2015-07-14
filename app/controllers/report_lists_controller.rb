@@ -22,17 +22,10 @@ class ReportListsController < OneReport::BaseController
   end
 
   def show
-
     respond_to do |format|
       format.html
-      format.pdf { send_data @report_list.combine_pdf.render, filename: @report_list.filename, type: 'application/pdf' }
+      format.pdf { send_data @report_list.pdf_file, filename: @report_list.filename, type: 'application/pdf' }
     end
-  end
-
-  def download
-    send_file @report_list.file.to_io,
-              filename: @report_list.file_filename,
-              type: @report_list.file_content_type
   end
 
   def destroy

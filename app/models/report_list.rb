@@ -19,11 +19,15 @@ class ReportList < ActiveRecord::Base
 
   after_create :add_to_worker
 
-  def run
+  def run(save = false)
     unless self.done
       reportable.public_send(reportable_name)
       self.update_attributes(done: true)
       ReportFinishMailer.finish_notify(self.id).deliver if self.notice_email.present?
+    end
+
+    if save == true
+      self.pdf_to_file
     end
   end
 

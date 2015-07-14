@@ -1,5 +1,20 @@
 module ReportPdf
 
+  def pdf_file
+    if file_id
+      file.read
+    else
+      combine_pdf.render
+    end
+  end
+
+  def pdf_to_file
+    self.file = StringIO.new(combine_pdf.render)
+    self.file_filename = filename
+    self.file_content_type = 'application/pdf'
+    self.save
+  end
+
   def combine_pdf
     pdf = pdf_object
 
