@@ -13,7 +13,7 @@ module ReportPdf
   end
 
   def pdf_to_file
-    self.file = StringIO.new(pdf_result.render)
+    self.file = StringIO.new(pdf_string)
     self.file_filename = filename
     self.file_content_type = 'application/pdf'
     self.save

@@ -17,6 +17,10 @@ class Combine < ActiveRecord::Base
 
   after_create :add_to_worker
 
+  def run(save = true)
+    self.pdf_to_file if save.is_a?(TrueClass)
+  end
+
   def pdf_string
     pdf = CombinePDF.new
     report_lists.each do |list|

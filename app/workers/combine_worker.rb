@@ -4,7 +4,7 @@ class CombineWorker
 
   def perform(combine_id)
     @combine = Combine.find(combine_id)
-    @combine.merged_pdf
+    @combine.run
   end
 
 end
