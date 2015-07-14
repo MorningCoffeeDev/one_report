@@ -17,10 +17,10 @@ class Combine < ActiveRecord::Base
 
   after_create :add_to_worker
 
-  def merged_pdf
+  def pdf_string
     pdf = CombinePDF.new
     report_lists.each do |list|
-      pdf << CombinePDF.parse(list.combine_pdf.render)
+      pdf << CombinePDF.parse(list.pdf_string)
     end
 
     pdf.to_pdf

@@ -1,21 +1,25 @@
 module ReportPdf
 
-  def pdf_file
+  def pdf_data
     if file_id
       file.read
     else
-      combine_pdf.render
+      pdf_string
     end
   end
 
+  def pdf_string
+    pdf_result.render
+  end
+
   def pdf_to_file
-    self.file = StringIO.new(combine_pdf.render)
+    self.file = StringIO.new(pdf_result.render)
     self.file_filename = filename
     self.file_content_type = 'application/pdf'
     self.save
   end
 
-  def combine_pdf
+  def pdf_result
     pdf = pdf_object
 
     return pdf unless pdf.empty?

@@ -1,6 +1,6 @@
 class ReportListsController < OneReport::BaseController
-  before_filter :set_report_list, only: [:show, :download, :destroy]
-  after_filter :set_reportable, only: [:new, :create, :show, :download]
+  before_filter :set_report_list, only: [:show, :destroy]
+  after_filter :set_reportable, only: [:new, :create, :show]
 
   def reportable
 
@@ -24,7 +24,7 @@ class ReportListsController < OneReport::BaseController
   def show
     respond_to do |format|
       format.html
-      format.pdf { send_data @report_list.pdf_file, filename: @report_list.filename, type: 'application/pdf' }
+      format.pdf { send_data @report_list.pdf_data, filename: @report_list.filename, type: 'application/pdf' }
     end
   end
 
