@@ -8,13 +8,13 @@ module ReportPdf
     config.custom = ActiveSupport::OrderedOptions.new
     config.default.th = {
       align: :center,
+      valign: :center,
       size: 12,
       font_style: :bold,
       height: 30,
       background_color: 'eeeeee'
     }
     config.default.td = {
-      height: 28,
       align: :left,
       valign: :center,
       size: 8
