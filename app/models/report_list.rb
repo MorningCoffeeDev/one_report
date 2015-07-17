@@ -17,12 +17,14 @@ class ReportList < ActiveRecord::Base
   validates :reportable_id, presence: true
   validates :reportable_type, presence: true
 
+  default_scope -> { where(published: true) }
+
   after_create :add_to_worker
 
   def run(save = false)
     unless self.done
       reportable.public_send(reportable_name)
-      self.update_attributes(done: true)
+      self.update_attributes(done: true, published: true)
       ReportFinishMailer.finish_notify(self.id).deliver if self.notice_email.present?
     end
 

@@ -36,6 +36,7 @@ module ReportPdf
       pdf.custom_table table
     end
 
+    pdf.once_footer(ending_data)
     pdf.repeat_footer
     pdf
   end
@@ -69,6 +70,14 @@ module ReportPdf
         ['', ''],
         ['', '']
       ]
+    end
+  end
+
+  def ending_data
+    if reportable.respond_to? :ending_data
+      reportable.ending_data
+    else
+      '-'
     end
   end
 
