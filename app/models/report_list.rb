@@ -26,7 +26,7 @@ class ReportList < ActiveRecord::Base
       ReportFinishMailer.finish_notify(self.id).deliver if self.notice_email.present?
     end
 
-    if save == true
+    if save
       self.pdf_to_file
     end
   end
@@ -37,6 +37,10 @@ class ReportList < ActiveRecord::Base
 
   def table_items_count
     table_lists.sum(:table_items_count)
+  end
+
+  def published_value
+    published ? 'published' : 'unpublished'
   end
 
 end

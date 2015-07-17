@@ -1,5 +1,5 @@
 class ReportListsController < OneReport::BaseController
-  before_filter :set_report_list, only: [:show, :destroy]
+  before_filter :set_report_list, only: [:show, :update_publish, :destroy]
   after_filter :set_reportable, only: [:new, :create, :show]
 
   def reportable
@@ -21,6 +21,13 @@ class ReportListsController < OneReport::BaseController
     redirect_to report_list_table_lists_url(@report_list.id)
   end
 
+  def update_publish
+    @report_list.published = !@report_list.published
+    @report_list.save
+
+    redirect_to :back
+  end
+
   def show
     respond_to do |format|
       format.html
@@ -32,6 +39,7 @@ class ReportListsController < OneReport::BaseController
     @report_list.destroy
     redirect_to report_lists_url, notice: 'Export file was successfully destroyed.'
   end
+
 
   private
   def set_report_list
