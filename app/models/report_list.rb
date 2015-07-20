@@ -17,7 +17,7 @@ class ReportList < ActiveRecord::Base
   validates :reportable_id, presence: true
   validates :reportable_type, presence: true
 
-  default_scope -> { where(published: true) }
+  #default_scope -> { where(published: true) }
 
   after_create :add_to_worker
 
