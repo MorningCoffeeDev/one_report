@@ -5,7 +5,8 @@ class ReportList < ActiveRecord::Base
                   :reportable_type,
                   :reportable_name,
                   :notice_email,
-                  :done
+                  :done,
+                  :published
 
   attachment :file
 
