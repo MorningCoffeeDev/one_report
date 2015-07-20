@@ -24,6 +24,7 @@ class ReportList < ActiveRecord::Base
 
   def run(save = true, rerun: true)
     table_lists.delete_all
+    remove_file_save
 
     if !self.done || rerun
       reportable.public_send(reportable_name)

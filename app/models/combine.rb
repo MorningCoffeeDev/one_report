@@ -18,6 +18,7 @@ class Combine < ActiveRecord::Base
   after_create :add_to_worker
 
   def run(save = true)
+    remove_file_save
     self.pdf_to_file if save.is_a?(TrueClass)
   end
 
