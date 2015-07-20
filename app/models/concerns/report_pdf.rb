@@ -77,7 +77,7 @@ module ReportPdf
     if reportable.respond_to? :ending_data
       reportable.ending_data
     else
-      '-'
+      ''
     end
   end
 
