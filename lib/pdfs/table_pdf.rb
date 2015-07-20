@@ -47,6 +47,7 @@ class TablePdf
   end
 
   def once_footer(data = nil)
+    move_down 10
     text data
   end
 
