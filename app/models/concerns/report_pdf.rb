@@ -1,5 +1,10 @@
 module ReportPdf
 
+  def remove_file_save
+    self.remove_file = true
+    self.save
+  end
+
   def pdf_data
     if file_id
       file.read
