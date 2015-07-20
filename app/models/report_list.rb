@@ -34,6 +34,16 @@ class ReportList < ActiveRecord::Base
     end
   end
 
+  def rerun(save = false)
+    table_lists.delete_all
+    reportable.public_send(reportable_name)
+    self.update_attributes(done: true, published: true)
+
+    if save
+      self.pdf_to_file
+    end
+  end
+
   def add_to_worker
     TableWorker.perform_async(self.id)
   end
