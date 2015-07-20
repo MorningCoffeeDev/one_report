@@ -22,7 +22,7 @@ class ReportList < ActiveRecord::Base
 
   after_create :add_to_worker
 
-  def run(save = false, rerun: true)
+  def run(save = true, rerun: true)
     table_lists.delete_all
 
     if !self.done || rerun
