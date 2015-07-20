@@ -22,10 +22,10 @@ class ReportList < ActiveRecord::Base
 
   after_create :add_to_worker
 
-  def run(save = false, redo: true)
+  def run(save = false, rerun: true)
     table_lists.delete_all
 
-    if !self.done || redo
+    if !self.done || rerun
       reportable.public_send(reportable_name)
       self.update_attributes(done: true, published: true)
       ReportFinishMailer.finish_notify(self.id).deliver if self.notice_email.present?
