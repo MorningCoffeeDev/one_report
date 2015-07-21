@@ -64,7 +64,11 @@ module ReportPdf
       filename = "report_#{self.id}"
     end
 
-    filename << '.' << extension unless filename.end_with?(extension)
+    unless filename.end_with?(extension)
+      filename << '.' << extension
+    end
+
+    filename
   end
 
   def header_info
