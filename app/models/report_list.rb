@@ -6,7 +6,9 @@ class ReportList < ActiveRecord::Base
                   :reportable_name,
                   :notice_email,
                   :done,
-                  :published
+                  :published,
+                  :file_id,
+                  :file
 
   attachment :file
 

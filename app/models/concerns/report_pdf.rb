@@ -6,11 +6,11 @@ module ReportPdf
   end
 
   def pdf_data
-    if file_id
-      file.read
-    else
+    # if file_id
+    #   file.read
+    # else
       pdf_string
-    end
+    #end
   end
 
   def pdf_string
