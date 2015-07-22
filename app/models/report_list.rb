@@ -22,7 +22,7 @@ class ReportList < ActiveRecord::Base
 
   #default_scope -> { where(published: true) }
 
-  after_create :add_to_worker
+  after_commit :add_to_worker, on: :create
 
   def run(save = true, rerun: true)
     table_lists.delete_all

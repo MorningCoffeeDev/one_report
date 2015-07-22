@@ -17,7 +17,7 @@ class Combine < ActiveRecord::Base
   validates :reportable_id, presence: true
   validates :reportable_type, presence: true
 
-  after_create :add_to_worker
+  after_commit :add_to_worker, on: :create
 
   def run(save = true)
     remove_file_save
