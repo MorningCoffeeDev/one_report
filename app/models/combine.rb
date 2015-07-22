@@ -48,7 +48,9 @@ class Combine < ActiveRecord::Base
   def pdf_string
     pdf = CombinePDF.new
     report_lists.each do |list|
-      pdf << CombinePDF.parse(list.pdf_string)
+      if list.table_items.count > 0
+        pdf << CombinePDF.parse(list.pdf_string)
+      end
     end
 
     pdf.to_pdf

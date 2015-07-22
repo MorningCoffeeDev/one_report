@@ -71,4 +71,4 @@ column :name, header: 'My name'
 column :name, header: 'My name', field: -> { name }
 ```
 
-**notice: the order it important, all columns order by It's defined order**
+**notice: the order is important, all columns order by It's defined order**
