@@ -1,5 +1,5 @@
 # OneReport
-OneReport is used to generate report, It can format to csv, pdf, html, xml and more
+OneReport is used for generate complex report, It can export to many format, Like: csv, pdf, html, xml and more
 
 ## Features
 - Easy to use, Just config it;
