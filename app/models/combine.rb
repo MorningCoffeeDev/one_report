@@ -26,7 +26,7 @@ class Combine < ActiveRecord::Base
 
   def pdf_string
     pdf = CombinePDF.new
-    report_lists.each do |list|
+    report_lists.published.each do |list|
       pdf << CombinePDF.parse(list.pdf_string)
     end
 
