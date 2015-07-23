@@ -1,11 +1,11 @@
 
-1. Add one_report to you Gemfile:
+1.Add one_report to you Gemfile:
 
 ```ruby
 gem 'one_report'
 ```
 
-2. Define report for you model
+2.Define report for you model
 
 ```ruby
 class StudentReport < ActiveRecord::Base
@@ -41,7 +41,8 @@ Through the definition, there are several meaning：
 - add method: `sports_report_id`, this method will get report list's id
 - add method: `sports_report_report_list`, this method will get report list model, for addition, It will generate a queue job;
 
-3. Define a Table
+3.Define a Table
 [Define Report Table](define-report-table.md)
 
-4. Define report method
+4.Define report method
+[Define Report Method](define-report-method.md)

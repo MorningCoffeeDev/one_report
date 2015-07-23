@@ -1,6 +1,6 @@
- # Define Table
+# Define Table
 
- ## A table is:
+## A table is:
 
  - A collection: include many rows;
  - A row: include many columns;

@@ -1,5 +1,6 @@
 require 'pdfs/config'
 require 'prawn/measurement_extensions'
+require 'prawn'
 class TablePdf
   include Prawn::View
 
