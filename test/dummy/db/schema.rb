@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150716083305) do
+ActiveRecord::Schema.define(version: 20150723085449) do
 
   create_table "combine_report_lists", force: :cascade do |t|
     t.integer  "combine_id"
@@ -74,5 +74,10 @@ ActiveRecord::Schema.define(version: 20150716083305) do
   end
 
   add_index "table_lists", ["report_list_id"], name: "index_table_lists_on_report_list_id"
+
+  create_table "users", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end
