@@ -31,7 +31,7 @@ class ReportListsController < OneReport::BaseController
   def show
     respond_to do |format|
       format.html
-      format.pdf { send_data @report_list.pdf_data, filename: @report_list.filename, type: 'application/pdf' }
+      format.pdf { send_data @report_list.pdf_string, filename: @report_list.filename, type: 'application/pdf' }
     end
   end
 

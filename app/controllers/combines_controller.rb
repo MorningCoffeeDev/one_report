@@ -5,7 +5,7 @@ class CombinesController < OneReport::BaseController
 
     respond_to do |format|
       format.html
-      format.pdf { send_data @combine.pdf_data, filename: @combine.filename, type: 'application/pdf' }
+      format.pdf { send_data @combine.pdf_string, filename: @combine.filename, type: 'application/pdf' }
     end
   end
 

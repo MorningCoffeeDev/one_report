@@ -21,28 +21,7 @@ class Combine < ActiveRecord::Base
 
   def run(save = true)
     remove_file_save
-    self.pdf_to_file if save.is_a?(TrueClass)
-  end
-
-  def stable_run
-    remove_file_save
-
-    pdf = CombinePDF.new
-    report_lists.each do |list|
-      begin
-        pdf << CombinePDF.load(list.file.download.to_path)
-      rescue
-      end
-    end
-
-    temp = "#{Rails.root}/tmp/pdfs/#{self.id}_temp.pdf"
-    pdf.save temp
-
-    File.open(temp, 'rb') do|file|
-       self.file = file
-    end
-
-    self.save
+    self.pdf_to_file if save
   end
 
   def pdf_string

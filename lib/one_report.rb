@@ -30,10 +30,9 @@ module OneReport
     extend ActiveSupport::Concern
 
     included do
-      has_one :combine, as: :reportable
-      has_many :combines, as: :reportable
+      has_one :combine, as: :reportable, dependent: :destroy
+      has_many :combines, as: :reportable, dependent: :destroy
     end
-
 
   end
 end
