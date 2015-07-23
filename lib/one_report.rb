@@ -20,6 +20,15 @@ module OneReport
           self.report_lists.find_or_create_by_reportable_name(name).id
         end
 
+        define_method "#{name}_report_list" do
+          rl = self.report_lists.where(reportable_name: name).first
+          if rl.present?
+            rl.add_to_worker
+          else
+            self.report_lists.create(reportable_name: name)
+          end
+        end
+
       end
 
     end
