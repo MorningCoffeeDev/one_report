@@ -10,7 +10,7 @@ class Combine < ActiveRecord::Base
   attachment :file
 
   belongs_to :reportable, polymorphic: true
-  has_many :combine_report_lists
+  has_many :combine_report_lists, dependent: :delete_all
   has_many :report_lists, through: :combine_report_lists
   has_many :table_lists, through: :report_lists
 
