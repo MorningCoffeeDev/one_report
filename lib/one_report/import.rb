@@ -56,6 +56,11 @@ module OneReport::Import
     self
   end
 
+  def note(header: nil, footer: nil)
+    @note_header = header
+    @note_footer = footer
+  end
+
   def header_default(name)
     h = {name => name.to_s.send(inflector)}
     @headers.merge! h
