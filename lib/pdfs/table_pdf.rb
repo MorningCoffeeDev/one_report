@@ -15,9 +15,12 @@ class TablePdf
 
   def custom_table(data, options={}, &block)
     default_options = {
-      position: :center,
-      column_widths: { -1 => 150, -2 => 150 }
+      position: :center
     }
+    if data[0] && data[0].size > 2
+      default_options.merge! column_widths: { -1 => 150, -2 => 150 }
+    end
+
     default_options.merge!(options)
     th_style = style(:th)
     td_style = style(:td)
