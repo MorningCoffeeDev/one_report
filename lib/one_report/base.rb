@@ -26,8 +26,6 @@ class OneReport::Base
   end
 
   def collection_result
-    binding.pry
-
     collection_model.public_send(collection_scope, *collection_args)
 
   end
