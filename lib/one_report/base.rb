@@ -13,11 +13,12 @@ class OneReport::Base
               :arguments,
               :collection_model,
               :collection_scope,
+              :collection_args,
               :report_list_id
 
   def initialize(report_list_id)
     @report_list_id = report_list_id
-    @collection_scope = []
+    @collection_scope = nil
     @columns = []
     @headers = {}
     @fields = {}
@@ -25,9 +26,10 @@ class OneReport::Base
   end
 
   def collection_result
-    collection_scope.inject(collection_model) do |model, scope|
-      model.send(scope)
-    end
+    binding.pry
+
+    collection_model.public_send(collection_scope, *collection_args)
+
   end
 
   def config

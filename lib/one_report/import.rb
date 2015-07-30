@@ -1,14 +1,13 @@
 module OneReport::Import
 
-  def collect(collection_model, *collection_scope)
-    @collection_model = collection_model
+  def collect(model, scope, *args)
+    @collection_model = model
 
-    collection_scope.each do |scope|
-      if collection_model.respond_to? scope
-        @collection_scope << scope unless @collection_scope.include?(scope)
-      else
-        raise 'The scope did not defined'
-      end
+    if collection_model.respond_to? scope
+      @collection_scope = scope
+      @collection_args = args
+    else
+      raise 'The scope did not defined'
     end
 
     self
