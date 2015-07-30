@@ -14,7 +14,6 @@ module OneReport::Import
     self
   end
 
-
   def column(name, field: nil, header: nil, argument: nil)
     unless name.is_a?(Symbol)
       raise 'must pass a symbol'
