@@ -1,11 +1,6 @@
 require 'concerns/report_pdf'
 class Combine < ActiveRecord::Base
   include ReportPdf
-  attr_accessible :reportable_id,
-                  :reportable_type,
-                  :reportable_name,
-                  :file_id,
-                  :file
 
   attachment :file
 
