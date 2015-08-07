@@ -1,14 +1,6 @@
 require 'concerns/report_pdf'
 class ReportList < ActiveRecord::Base
   include ReportPdf
-  attr_accessible :reportable_id,
-                  :reportable_type,
-                  :reportable_name,
-                  :notice_email,
-                  :done,
-                  :published,
-                  :file_id,
-                  :file
 
   attachment :file
 
