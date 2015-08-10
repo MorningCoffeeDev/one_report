@@ -49,6 +49,10 @@ class TableList < ActiveRecord::Base
     csv
   end
 
+  def group_by_first_column
+    csv_fields.group_by { |i| i[0] }
+  end
+
   def pdf_fields
     self.table_items.each do |item|
       begin
