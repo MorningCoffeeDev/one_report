@@ -2,7 +2,7 @@ class TableItem < ActiveRecord::Base
 
   belongs_to :table_list, counter_cache: true
 
-  #validates :fields, format: { with: /\n$/, message: "must end with return" }
+  validates :fields, format: { with: /\n\z/, message: "must end with return" }
 
 
   def to_pdf

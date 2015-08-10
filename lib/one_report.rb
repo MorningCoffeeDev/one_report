@@ -17,7 +17,7 @@ module OneReport
       def define_report(name)
 
         define_method "#{name}_id" do
-          self.report_lists.find_or_create_by(reportable_name: name).id
+          self.report_lists.where(reportable_name: name).first_or_create.id
         end
 
         define_method "#{name}_report_list" do
