@@ -1,4 +1,3 @@
-class OneReport::BaseController < ApplicationController
-  skip_authorization_check
+class OneReport::BaseController < ActionController::Base
 
 end
