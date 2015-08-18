@@ -38,6 +38,7 @@ module ReportPdf
       value.csv_fields.each do |row|
         table << row
       end
+      table << value.csv_footers if value.csv_footers.present?
       pdf.custom_table table
     end
 

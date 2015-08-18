@@ -49,6 +49,10 @@ class TableList < ActiveRecord::Base
     csv
   end
 
+  def csv_footers
+    CSV.parse_line(self.footers)
+  end
+
   def group_by_first_column
     csv_fields.group_by { |i| i[0] }
   end
@@ -61,6 +65,7 @@ class TableList < ActiveRecord::Base
       rescue
       end
     end
+    table << CSV.parse_line(self.footers) if footers.present?
   end
 
   def csv_string

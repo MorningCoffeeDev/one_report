@@ -5,17 +5,18 @@ module OneReport::Export
     @table_list.headers = header_values.to_csv
     @table_list.note_header = @note_header
     @table_list.note_footer = @note_footer
+    @table_list.footers = footer_result.to_csv
+    @table_list.save
 
     collection_result.each do |object|
       export_row(object)
     end
-
-    @table_list.footers = footer_result
-    @table_list.save
   end
 
   def footer_result
     results = []
+
+    return if footer_values.compact.blank?
     footer_values.each do |v|
      if v.respond_to?(:call)
        results << v.call

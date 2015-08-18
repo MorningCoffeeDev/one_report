@@ -35,11 +35,8 @@ class ExampleTable < OneReport::Base
       scope :one_report_scope, -> { limit(size) }
     end
 
-    # with one scope
-    collect User, :all
-
     # with more scope, notice that the scope will be called orderly
-    collect User, :all, :one_report_scope
+    collect -> { User.one_report_scope(size) }
 
   end
 
