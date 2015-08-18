@@ -4,7 +4,7 @@ class TableList < ActiveRecord::Base
   belongs_to :report_list
   has_many :table_items, dependent: :destroy
 
-  validates :headers, format: { with: /\n$/, message: "must end with return" }
+  validates :headers, format: { with: /\n\z/, message: "must end with return" }
 
   def pdf
     @pdf ||= TablePdf.new
@@ -47,6 +47,10 @@ class TableList < ActiveRecord::Base
       end
     end
     csv
+  end
+
+  def group_by_first_column
+    csv_fields.group_by { |i| i[0] }
   end
 
   def pdf_fields

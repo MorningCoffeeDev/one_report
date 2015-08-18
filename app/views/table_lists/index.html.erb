@@ -1,7 +1,5 @@
-<section>
-
-<ul class="breadcrumb">
-  <li><%= link_to 'back', :back %></li>
+<ul class="ui breadcrumb">
+  <li class="section"><%= link_to 'back', :back %></li>
 </ul>
 
 <div class="page-header">
@@ -19,5 +17,3 @@
 <% if @table_lists.first.present? %>
   <%= render partial: 'table', locals: { table_list: @table_lists.first } %>
 <% end %>
-
-</section>
