@@ -1,36 +1,32 @@
 module OneReport::Import
 
-  def collect(model, scope, *args)
-    @collection_model = model
-
-    if collection_model.respond_to? scope
-      @collection_scope = scope
-      @collection_args = args
+  def collect(scope)
+    if scope.respond_to?(:call)
+      @collection = scope
     else
-      raise 'The scope did not defined'
+      raise 'The scope must be a lambda'
     end
 
     self
   end
 
-  def column(name, field: nil, header: nil, argument: nil)
+  def column(name, field: nil, header: nil, argument: nil, footer: nil)
     unless name.is_a?(Symbol)
       raise 'must pass a symbol'
     end
 
     unless @columns.include?(name)
-      @columns << name
+      columns << name
     end
 
     if field.nil?
-      @fields.merge!(name => name)
+      fields.merge!(name => name)
     elsif field.equal?(false)
-      @fields.merge!(name => nil)
+      fields.merge!(name => nil)
     elsif field.is_a?(Symbol)
-      @fields.merge!(name => field)
+      fields.merge!(name => field)
     elsif field.respond_to?(:call)
-      field = column_scope(name, field)
-      @fields.merge!(name => field)
+      fields.merge!(name => scope(name, field))
     else
       raise 'wrong field type'
     end
@@ -38,15 +34,19 @@ module OneReport::Import
     if header.nil?
       header_default(name)
     elsif header.is_a?(String)
-      @headers.merge!(name => header)
+      headers.merge!(name => header)
     else
       raise 'wrong header type'
+    end
+
+    if footer.present?
+      footers.merge!(name => footer)
     end
 
     if argument.nil?
       nil  # todo use next ?
     elsif argument.is_a?(Array)
-      @arguments.merge!(name => argument)
+      arguments.merge!(name => argument)
     else
       raise 'wrong argument type'
     end
@@ -61,14 +61,7 @@ module OneReport::Import
 
   def header_default(name)
     h = {name => name.to_s.send(inflector)}
-    @headers.merge! h
-  end
-
-  def column_scope(name, field)
-    method_name = 'one_report_' + name.to_s
-    scope(method_name, field)
-
-    method_name.to_sym
+    headers.merge! h
   end
 
   def scope(name, body)
@@ -76,9 +69,13 @@ module OneReport::Import
       raise ArgumentError, 'The scope body needs to be callable.'
     end
 
-    collection_model.send(:define_method, name) do |*args|
+    method_name = 'one_report_' + name.to_s
+
+    collection_result.first.class.send(:define_method, method_name) do |*args|
       instance_exec(*args, &body)
     end
+
+    method_name.to_sym
   end
 
 end

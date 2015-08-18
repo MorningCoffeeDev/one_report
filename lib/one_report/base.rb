@@ -7,27 +7,26 @@ class OneReport::Base
   include OneReport::Import
   include OneReport::Export
 
-  attr_reader :columns,
-              :headers,
-              :fields,
-              :arguments,
-              :collection_model,
-              :collection_scope,
-              :collection_args,
-              :report_list_id
+  attr_accessor :report_list_id,
+                :collection,
+                :columns,
+                :headers,
+                :footers,
+                :fields,
+                :arguments
 
   def initialize(report_list_id)
     @report_list_id = report_list_id
-    @collection_scope = nil
+    @collection = nil
     @columns = []
     @headers = {}
+    @footers = {}
     @fields = {}
     @arguments = {}
   end
 
   def collection_result
-    collection_model.public_send(collection_scope, *collection_args)
-
+    collection.call
   end
 
   def config
@@ -46,11 +45,14 @@ class OneReport::Base
     @field_values = fields.values_at(*columns)
   end
 
-  def self.to_table(*args)
+  def self.config(*args)
     report_list_id = args.shift
     report = self.new(report_list_id)
     report.config(*args)
-    report.to_table
+  end
+
+  def self.to_table(*args)
+    config(*args).to_table
   end
 
 end

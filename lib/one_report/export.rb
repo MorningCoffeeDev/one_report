@@ -1,14 +1,17 @@
 module OneReport::Export
 
   def to_table
-    @table_list = TableList.new(report_list_id: report_list_id, headers: header_values.to_csv)
-
+    @table_list = TableList.new(report_list_id: report_list_id)
+    @table_list.headers = header_values.to_csv
     @table_list.note_header = @note_header
     @table_list.note_footer = @note_footer
-    @table_list.save
+
     collection_result.each do |object|
       export_row(object)
     end
+
+    @table_list.footers = footer_values.to_csv
+    @table_list.save
   end
 
   def export_row(object)
