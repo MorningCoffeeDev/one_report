@@ -16,7 +16,7 @@ module OneReport::Export
   def footer_result
     results = []
 
-    return if footer_values.compact.blank?
+    return results if footer_values.compact.blank?
     footer_values.each do |v|
      if v.respond_to?(:call)
        results << v.call
