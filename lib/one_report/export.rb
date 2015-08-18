@@ -10,8 +10,20 @@ module OneReport::Export
       export_row(object)
     end
 
-    @table_list.footers = footer_values.to_csv
+    @table_list.footers = footer_result
     @table_list.save
+  end
+
+  def footer_result
+    results = []
+    footer_values.each do |v|
+     if v.respond_to?(:call)
+       results << v.call
+     else
+       results << v
+     end
+    end
+    results
   end
 
   def export_row(object)

@@ -41,6 +41,10 @@ class OneReport::Base
     @header_values = headers.values_at(*columns)
   end
 
+  def footer_values
+    @footer_values = footers.values_at(*columns)
+  end
+
   def field_values
     @field_values = fields.values_at(*columns)
   end
