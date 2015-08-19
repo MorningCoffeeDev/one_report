@@ -1,29 +1,13 @@
-require 'pdfs/table_pdf'
 class TableList < ActiveRecord::Base
-  attr_writer :pdf, :table
   belongs_to :report_list
   has_many :table_items, dependent: :destroy
 
   validates :headers, format: { with: /\n\z/, message: "must end with return" }
 
-  def pdf
-    @pdf ||= TablePdf.new
-  end
-
   def brothers
     self.class.where(report_list_id: self.report_list_id)
   end
 
-  def table
-    @table ||= []
-  end
-
-  def to_pdf
-    table << pdf.process_header_row(csv_headers)
-    pdf_fields
-    pdf.table(table)
-    pdf
-  end
 
   def to_row_pdf
     self.table_items.each do |item|

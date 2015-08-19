@@ -16,4 +16,12 @@
     </tr>
   <% end %>
   </tbody>
+
+  <tfoot>
+  <tr>
+    <% table_list.csv_footers.each do |footer| %>
+      <td><%= footer %></td>
+    <% end %>
+  </tr>
+  </tfoot>
 </table>
