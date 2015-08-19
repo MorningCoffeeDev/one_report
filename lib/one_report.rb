@@ -12,6 +12,19 @@ module OneReport
       has_many :report_lists, as: :reportable, dependent: :destroy
     end
 
+    def pdf_string
+      if report_lists.size > 1
+        pdf = CombinePDF.new
+        report_lists.published.each do |list|
+          pdf << CombinePDF.parse(list.pdf_string)
+        end
+
+        pdf.to_pdf
+      else
+        report_list.pdf_string
+      end
+    end
+
     module ClassMethods
 
       def define_report(name)

@@ -50,7 +50,7 @@ class TableList < ActiveRecord::Base
   end
 
   def csv_footers
-    CSV.parse_line(self.footers)
+    CSV.parse_line(self.footers) if self.footers.present?
   end
 
   def group_by_first_column
