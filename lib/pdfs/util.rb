@@ -3,7 +3,7 @@ require 'pdfs/config'
 module ReportPdf
   module Util
 
-    private
+    #private
     def document
       config = style(:document)
       @document ||= Prawn::Document.new(config)

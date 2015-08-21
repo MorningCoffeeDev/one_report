@@ -26,6 +26,7 @@ module ReportPdf
 
     config.custom.th = {}
     config.custom.td = {}
+    config.custom.document ={}
   end
 
 end
