@@ -12,7 +12,11 @@ class TableItem < ActiveRecord::Base
   end
 
   def csv_fields
-    CSV.parse_line(fields)
+    begin
+      CSV.parse_line(fields)
+    rescue
+      CSV.parse_line(fields, quote_char: '\'')
+    end
   end
 
   def csv_array
