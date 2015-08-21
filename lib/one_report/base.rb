@@ -1,7 +1,7 @@
 require 'csv'
-require 'one_report/config'
-require 'one_report/import'
-require 'one_report/export'
+require 'one_report/base/config'
+require 'one_report/base/import'
+require 'one_report/base/export'
 
 class OneReport::Base
   include OneReport::Import
