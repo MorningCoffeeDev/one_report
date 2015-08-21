@@ -1,5 +1,5 @@
 class TableList < ActiveRecord::Base
-  belongs_to :report_list
+  belongs_to :report_list, counter_cache: true
   has_many :table_items, dependent: :destroy
 
   validates :headers, format: { with: /\n\z/, message: "must end with return" }
@@ -8,27 +8,18 @@ class TableList < ActiveRecord::Base
     self.class.where(report_list_id: self.report_list_id)
   end
 
-
-  def to_row_pdf
-    self.table_items.each do |item|
-      pdf.table item.csv_array
-      pdf.start_new_page
-    end
-
-    pdf
-  end
-
   def csv_headers
-    CSV.parse_line(self.headers)
+    begin
+      CSV.parse_line(headers)
+    rescue
+      CSV.parse_line(headers, quote_char: '\'')
+    end
   end
 
   def csv_fields
     csv = []
     self.table_items.each do |item|
-      begin
-        csv << CSV.parse_line(item.fields)
-      rescue
-      end
+      csv << item.csv_fields
     end
     csv
   end
@@ -43,17 +34,6 @@ class TableList < ActiveRecord::Base
 
   def group_by_first_column
     csv_fields.group_by { |i| i[0] }
-  end
-
-  def pdf_fields
-    self.table_items.each do |item|
-      begin
-        csv = CSV.parse_line(item.fields)
-        table << pdf.process_result_row(csv)
-      rescue
-      end
-    end
-    table << CSV.parse_line(self.footers) if footers.present?
   end
 
   def csv_string

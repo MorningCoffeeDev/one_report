@@ -1,15 +1,8 @@
 class TableItem < ActiveRecord::Base
-
   belongs_to :table_list, counter_cache: true
 
   validates :fields, format: { with: /\n\z/, message: "must end with return" }
 
-
-  def to_pdf
-
-
-
-  end
 
   def csv_fields
     begin
@@ -21,8 +14,8 @@ class TableItem < ActiveRecord::Base
 
   def csv_array
     csv = []
-    csv << CSV.parse_line(self.table_list.headers)
-    csv << CSV.parse_line(self.fields)
+    csv << table_list.csv_headers
+    csv << csv_fields
     csv
   end
 
