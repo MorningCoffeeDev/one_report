@@ -26,22 +26,18 @@ module ReportPdf
 
   def pdf_result
     pdf = pdf_object
-
     return pdf unless pdf.empty?
 
-    pdf.repeat_header header_info
+    default_options = {
+      position: :center,
+      column_widths: { -1 => 150, -2 => 150 }
+    }
 
+    pdf.repeat_header header_info
     table_lists.includes(:table_items).each_with_index do |value, index|
       pdf.start_new_page unless index == 0
-      table = []
-      table << value.csv_headers
-      value.csv_fields.each do |row|
-        table << row
-      end
-      table << value.csv_footers if value.csv_footers.present?
-      pdf.custom_table table
+      pdf.custom_table value.csv_array, default_options
     end
-
     pdf.once_footer(ending_data)
     pdf.repeat_footer
     pdf

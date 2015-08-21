@@ -19,6 +19,10 @@ module ReportPdf
       valign: :center,
       size: 8
     }
+    config.default.document = {
+      page_size: 'A4',
+      margin: 75
+    }
 
     config.custom.th = {}
     config.custom.td = {}

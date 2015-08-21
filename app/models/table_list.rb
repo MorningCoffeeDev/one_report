@@ -8,6 +8,16 @@ class TableList < ActiveRecord::Base
     self.class.where(report_list_id: self.report_list_id)
   end
 
+  def csv_array
+    table = []
+    table << csv_headers
+    csv_fields.each do |row|
+      table << row
+    end
+    table << csv_footers if csv_footers.present?
+    table
+  end
+
   def csv_headers
     begin
       CSV.parse_line(headers)

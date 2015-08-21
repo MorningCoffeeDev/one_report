@@ -1,34 +1,18 @@
-require 'pdfs/config'
 require 'prawn/measurement_extensions'
 require 'prawn'
+require 'pdfs/util'
+
 class TablePdf
   include Prawn::View
 
-  def document
-    default = {
-      page_size: 'A4',
-      margin: 75
-    }
-
-    @document ||= Prawn::Document.new(default)
-  end
-
   def custom_table(data, options={}, &block)
-    default_options = {
-      position: :center
-    }
-    if data[0] && data[0].size > 2
-      default_options.merge! column_widths: { -1 => 150, -2 => 150 }
-    end
-
-    default_options.merge!(options)
     th_style = style(:th)
     td_style = style(:td)
 
     if block_given?
-      table(data, default_options, &block)
+      table(data, options, &block)
     else
-      table(data, default_options) do
+      table(data, options) do
         row(0).style th_style
         row(1..-1).style td_style
       end
@@ -90,35 +74,6 @@ class TablePdf
   def horizontal_rule
     move_down 10
     stroke_horizontal_rule
-  end
-
-  private
-  def style(name)
-    default_style[name].merge custom_style[name]
-  end
-
-  def default_style
-    ReportPdf.config.default
-  end
-
-  def custom_style
-    ReportPdf.config.custom
-  end
-
-  def make_row(data_array, default_options)
-    result = []
-    data_array.each do |data|
-      result << make_cell(data, default_options)
-    end
-    result
-  end
-
-end
-
-class  Prawn::Document
-
-  def empty?
-    page.content.stream.length <= 2
   end
 
 end
