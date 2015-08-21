@@ -1,4 +1,4 @@
-class TableListsController < OneReport::BaseController
+class OneReport::TableListsController < OneReport::BaseController
   before_filter :set_report_list
   before_filter :set_table_list, only: [:show, :row]
 

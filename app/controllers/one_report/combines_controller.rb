@@ -1,4 +1,4 @@
-class CombinesController < OneReport::BaseController
+class OneReport::CombinesController < OneReport::BaseController
   before_filter :set_combine, only: [:show, :table_lists, :destroy]
 
   def show
