@@ -1,24 +1,12 @@
-require 'pdfs/config'
-
 module ReportPdf
   module Util
 
-    #private
-    def document
-      config = style(:document)
-      @document ||= Prawn::Document.new(config)
-    end
-
-    def style(name)
-      default_style[name].merge custom_style[name]
-    end
-
-    def default_style
-      ReportPdf.config.default
-    end
-
-    def custom_style
-      ReportPdf.config.custom
+    def document(options = {})
+      default_config = {
+        page_size: 'A4',
+        margin: 75
+      }
+      @document ||= Prawn::Document.new(default_config)
     end
 
     def make_row(data_array, default_options)
