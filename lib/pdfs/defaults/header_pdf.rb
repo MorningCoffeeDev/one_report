@@ -1,10 +1,4 @@
-require 'prawn/measurement_extensions'
-require 'prawn'
-require 'pdfs/util'
-
-class HeaderPdf
-  include Prawn::View
-  include ReportPdf::Util
+class HeaderPdf < ReportPdf
 
   def process_header(data)
     default_options = {

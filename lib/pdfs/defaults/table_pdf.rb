@@ -1,10 +1,4 @@
-require 'prawn/measurement_extensions'
-require 'prawn'
-require 'pdfs/util'
-
-class TablePdf
-  include Prawn::View
-  include ReportPdf::Util
+class TablePdf < ReportPdf
 
   def custom_table(data, options={}, &block)
     th_style = {

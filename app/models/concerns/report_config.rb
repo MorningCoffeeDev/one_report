@@ -1,4 +1,4 @@
-module ReportPdf
+module ReportConfig
 
   def pdf_object
     if reportable.respond_to?(:pdf_object)
@@ -25,7 +25,7 @@ module ReportPdf
     filename
   end
 
-  def header_info
+  def header_data
     if reportable.respond_to? :header_info
       reportable.header_info
     else
