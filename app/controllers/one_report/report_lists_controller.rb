@@ -47,7 +47,7 @@ class OneReport::ReportListsController < OneReport::BaseController
   end
 
   def set_reportable
-    @reportable = @report_list.reportable
+    @reportable = params[:reportable_type].safe_constantize.find params[:reportable_id]
   end
 
 end

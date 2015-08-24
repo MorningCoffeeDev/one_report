@@ -10,13 +10,9 @@ class TablePdf
     th_style = style(:th)
     td_style = style(:td)
 
-    if block_given?
-      table(data, options, &block)
-    else
-      table(data, options) do
-        row(0).style th_style
-        row(1..-1).style td_style
-      end
+    table(data, options) do
+      row(0).style th_style
+      row(1..-1).style td_style
     end
   end
 
