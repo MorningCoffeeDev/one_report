@@ -29,8 +29,7 @@ module ReportPdf
     return pdf unless pdf.empty?
 
     default_options = {
-      position: :center,
-      column_widths: { -1 => 150, -2 => 150 }
+      position: :center
     }
 
     pdf.repeat_header header_info
