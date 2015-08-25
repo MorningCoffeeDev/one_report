@@ -41,7 +41,7 @@ module DefaultTablePdf
     move_down 50
   end
 
-  def custom_table(data, options={}, &block)
+  def custom_table(data)
     th_style = {
       align: :center,
       valign: :center,
@@ -56,7 +56,8 @@ module DefaultTablePdf
       size: 8
     }
     options = {
-      position: :center
+      position: :center,
+      width: bounds.width
     }
 
     table(data, options) do
