@@ -1,5 +1,12 @@
 module ReportPdf
-  include ReportConfig
+
+  def pdf
+    if reportable.respond_to?(:pdf_object)
+      @pdf ||= reportable.pdf_object(reportable_name)
+    else
+      @pdf ||= TablePdf.new
+    end
+  end
 
   def remove_file_save
     self.remove_file = true
@@ -25,8 +32,49 @@ module ReportPdf
     self.save
   end
 
-  def config
-    table_data = table_lists.includes(:table_items).map { |i| i.csv_array }
+  def pdf_result
+    pdf.table_data = table_lists.includes(:table_items).map { |i| i.csv_array }
+    pdf.header_data = header_data
+    pdf.ending_data = ending_data
+    pdf.run
+    pdf
+  end
+
+
+  def header_data
+    if reportable.respond_to? :header_info
+      reportable.header_info
+    else
+      [
+        ['', ''],
+        ['', '']
+      ]
+    end
+  end
+
+  def ending_data
+    if reportable.respond_to? :ending_data
+      reportable.try(:ending_data)
+    else
+      ''
+    end
+  end
+
+  def filename(extension = 'pdf')
+    filename = file_filename
+    if filename
+      filename
+    elsif reportable.respond_to?(:filename)
+      filename = reportable.filename
+    else
+      filename = "report_#{self.id}"
+    end
+
+    unless filename.end_with?(extension)
+      filename << '.' << extension
+    end
+
+    filename
   end
 
 end

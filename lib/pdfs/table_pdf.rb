@@ -1,5 +1,6 @@
 require 'prawn/measurement_extensions'
 require 'prawn'
+require_relative 'defaults/table_pdf'
 
 # a pdf object should response these methods
 # * document
@@ -12,7 +13,8 @@ require 'prawn'
 
 class TablePdf
   include Prawn::View
-  attr_accessor :page, :beginning_data, :header_data, :footer_data, :ending_data
+  include DefaultTablePdf
+  attr_accessor :page, :beginning_data, :header_data, :footer_data, :ending_data, :table_data
 
   def initialize
     @page = true
@@ -31,42 +33,18 @@ class TablePdf
     @document ||= Prawn::Document.new(default_config)
   end
 
-  def body
+  def run
     return self unless self.empty?
 
-    once_header begin_data
-    repeat_header header_data
+    once_header beginning_data if beginning_data
+    repeat_header header_data if header_data
     table_data.each_with_index do |value, index|
       start_new_page unless index == 0
       custom_table value
     end
-    pdf.once_footer(ending_data)
-    pdf.repeat_footer footer_data
-    pdf
-  end
-
-  def once_header(data = nil)
-    text data
-  end
-
-  def repeat_header(data = nil)
-    repeat :all do
-      canvas do
-        bounding_box [bounds.left+75, bounds.top-20], :width  => bounds.width do
-          process_header(data)
-        end
-      end
-    end
-  end
-
-  def once_footer(data = nil)
-    move_down 10
-    text data
-  end
-
-  def repeat_footer(data = nil)
-    text data
-    number_pages "<page> / <total>", at: [bounds.right - 50, 0] if page
+    once_footer ending_data if ending_data
+    repeat_footer footer_data if footer_data
+    self
   end
 
 end
