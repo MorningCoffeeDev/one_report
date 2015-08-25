@@ -14,6 +14,9 @@ class TablePdf < ReportPdf
       valign: :center,
       size: 8
     }
+    options = {
+      position: :center
+    }
 
     table(data, options) do
       row(0).style th_style

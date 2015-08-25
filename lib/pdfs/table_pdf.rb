@@ -1,5 +1,27 @@
+require 'prawn/measurement_extensions'
+require 'prawn'
+
+# a pdf object should response these methods
+# * document
+# * repeat_header
+# * once_header
+# * custom_table
+# * once_footer
+# * repeat_footer
+
+
 class TablePdf
   include Prawn::View
+  attr_accessor :page, :beginning_data, :header_data, :footer_data, :ending_data
+
+  def initialize
+    @page = true
+    @beginning_data = nil
+    @header_data = nil
+    @footer_data = nil
+    @ending_data = nil
+    @table_data = []
+  end
 
   def document
     default_config = {
@@ -7,6 +29,20 @@ class TablePdf
       margin: 75
     }
     @document ||= Prawn::Document.new(default_config)
+  end
+
+  def body
+    return self unless self.empty?
+
+    once_header begin_data
+    repeat_header header_data
+    table_data.each_with_index do |value, index|
+      start_new_page unless index == 0
+      custom_table value
+    end
+    pdf.once_footer(ending_data)
+    pdf.repeat_footer footer_data
+    pdf
   end
 
   def once_header(data = nil)
@@ -28,16 +64,18 @@ class TablePdf
     text data
   end
 
-  def repeat_footer(data = nil, page = true)
+  def repeat_footer(data = nil)
+    text data
     number_pages "<page> / <total>", at: [bounds.right - 50, 0] if page
   end
 
-  def make_row(data_array, default_options)
-    result = []
-    data_array.each do |data|
-      result << make_cell(data, default_options)
-    end
-    result
+end
+
+
+class Prawn::Document
+
+  def empty?
+    page.content.stream.length <= 2
   end
 
 end

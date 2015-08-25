@@ -1,4 +1,5 @@
 module ReportPdf
+  include ReportConfig
 
   def remove_file_save
     self.remove_file = true
@@ -24,23 +25,8 @@ module ReportPdf
     self.save
   end
 
-  def pdf_result
-    pdf = pdf_object
-    return pdf unless pdf.empty?
-
-    default_options = {
-      position: :center
-    }
-
-    pdf.once_header begin_data
-    pdf.repeat_header header_data
-    table_lists.includes(:table_items).each_with_index do |value, index|
-      pdf.start_new_page unless index == 0
-      pdf.custom_table value.csv_array, default_options
-    end
-    pdf.once_footer(ending_data)
-    pdf.repeat_footer footer_data
-    pdf
+  def config
+    table_data = table_lists.includes(:table_items).map { |i| i.csv_array }
   end
 
 end

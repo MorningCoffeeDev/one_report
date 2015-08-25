@@ -2,7 +2,7 @@ module ReportConfig
 
   def pdf_object
     if reportable.respond_to?(:pdf_object)
-      reportable.pdf_object
+      reportable.pdf_object(reportable_name)
     else
       TablePdf.new
     end
