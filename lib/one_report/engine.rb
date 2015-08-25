@@ -6,6 +6,7 @@ require 'sprockets/railtie'
 
 module OneReport
   class Engine < ::Rails::Engine
+    config.autoload_paths += Dir["#{config.root}/app/models/concerns"]
     #config.assets.precompile += ['one_report/application.js']
     #config.assets.precompile += ['one_report/application.css']
   end

@@ -1,19 +1,7 @@
-require 'prawn/measurement_extensions'
-require 'prawn'
-
-# a pdf object should response these methods
-# * document
-# * repeat_header
-# * once_header
-# * custom_table
-# * once_footer
-# * repeat_footer
-
-
-class ReportPdf
+class TablePdf
   include Prawn::View
 
-  def document(options = {})
+  def document
     default_config = {
       page_size: 'A4',
       margin: 75
@@ -50,15 +38,6 @@ class ReportPdf
       result << make_cell(data, default_options)
     end
     result
-  end
-
-end
-
-
-class Prawn::Document
-
-  def empty?
-    page.content.stream.length <= 2
   end
 
 end

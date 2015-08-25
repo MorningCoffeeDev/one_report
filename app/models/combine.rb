@@ -1,4 +1,3 @@
-require 'concerns/report_pdf'
 class Combine < ActiveRecord::Base
   include ReportPdf
 

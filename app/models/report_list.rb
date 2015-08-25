@@ -1,4 +1,3 @@
-require 'concerns/report_pdf'
 class ReportList < ActiveRecord::Base
   include ReportPdf
 

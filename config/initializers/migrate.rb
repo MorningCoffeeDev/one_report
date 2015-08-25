@@ -7,4 +7,4 @@ OneReport::Engine.config.paths['config/locales'].expanded.each do |path|
   Rails.configuration.paths['config/locales'].push(path)
 end
 
-Rails.configuration.autoload_paths += Dir["#{OneReport::Engine.config.root}/app/models/concerns"]
+
