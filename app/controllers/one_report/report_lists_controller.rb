@@ -1,6 +1,6 @@
 class OneReport::ReportListsController < OneReport::BaseController
   before_filter :set_report_list, only: [:show, :update_publish, :destroy]
-  after_filter :set_reportable, only: [:new, :create, :show]
+  #after_filter :set_reportable, only: [:new, :create, :show]
 
   def reportable
 
