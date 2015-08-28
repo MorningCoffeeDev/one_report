@@ -26,14 +26,14 @@ end
 
 ```ruby
 # consider a User model
+# need define some scope before used it;
+class User
+  scope :one_report_scope, ->(size) { limit(size) }
+end
+
 class ExampleTable < OneReport::Base
 
   def config(size)
-
-    # need define some scope before used it;
-    User.class_eval do
-      scope :one_report_scope, -> { limit(size) }
-    end
 
     # with more scope, notice that the scope will be called orderly
     collect -> { User.one_report_scope(size) }
