@@ -57,6 +57,8 @@ module OneReport::Import
   def note(header: nil, footer: nil)
     @note_header = header
     @note_footer = footer
+
+    self
   end
 
   def header_default(name)
