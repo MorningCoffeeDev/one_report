@@ -1,8 +1,8 @@
 # OneReport
-OneReport is used for generating complex report, It can export to many format, Like: csv, pdf, html, xml and more
+OneReport is a Rails Engine used for generating complex report, It can export to many format, Like: csv, pdf, html, xml and more
 
 ## Features
-- Easy to use, Just config it;
+- Easy to use, Just config;
 - Separate pdf style and data;
 - Strong, even data processing break off, It can be restore easily;
 
@@ -10,6 +10,24 @@ OneReport is used for generating complex report, It can export to many format, L
 - sidekiq job;
 - report file store;
 - send email notice user after finished sidekiq job;
+
+## How it works
+* there is a Model ReportList Associate to the model which has a report, ReportList records information as bellow:
+
+| column name | column type | explain |example |
+|--|--|--|--|
+| reportable_id | integer | association id | 1 |
+| reportable_type | string | association type | StudentReport |
+| reportable_name | string | the defined report name | sports_report |
+| file_id || report file information, use refile admin file | |
+| file_filename |||
+| file_size |||
+| file_content_type | ||
+| notice_email ||notice Functions |
+| notice_body ||
+| done | |status Functions |
+| published |||
+```
 
 
 ## Getting Started
@@ -35,30 +53,7 @@ end
 ```
 Since the definition, there are several meaning：
 
-  * there is a Model ReportList Associate to this model, ReportList records infomation as bellow:
 
-```ruby
-# assocation
-:reportable_id, :integer  # 1
-:reportable_type, :string  # "StudentReport"
-
-# the defined reportname
-:reportable_name, :string  # "sports_report"
-
-# report file infomation, use refile admin file
-:file_id
-:file_filename
-:file_size
-:file_content_type
-
-# notice Functions
-:notice_email
-:notice_body
-
-# status Functions
-:done
-:published
-```
   * add method: `sports_report_id`, this method will get report list's id
   * add method: `sports_report_report_list`, this method will get report list model, for addition, It will generate a queue job;
 
