@@ -11,6 +11,7 @@ module ReportPdf
   def remove_file_save
     self.remove_file = true
     self.save
+    self.remove_file = nil
   end
 
   def pdf_data

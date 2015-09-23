@@ -4,12 +4,12 @@ class ReportList < ActiveRecord::Base
   attachment :file
 
   belongs_to :reportable, polymorphic: true
-  has_one :table_list
   has_many :table_lists, dependent: :destroy
   has_many :table_items, through: :table_lists
 
   validates :reportable_id, presence: true
   validates :reportable_type, presence: true
+  validates :reportable_name, presence: true
 
   scope :published, -> { where(published: true) }
 
@@ -17,7 +17,6 @@ class ReportList < ActiveRecord::Base
 
   def run(save = true, rerun: true)
     table_lists.delete_all
-    remove_file_save
 
     if !self.done || rerun
       reportable.public_send(reportable_name)
