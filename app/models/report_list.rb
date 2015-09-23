@@ -16,7 +16,7 @@ class ReportList < ActiveRecord::Base
   after_commit :add_to_worker, on: :create
 
   def run(save = true, rerun: true)
-    table_lists.delete_all
+    clear_old
 
     if !self.done || rerun
       reportable.public_send(reportable_name)
@@ -27,6 +27,15 @@ class ReportList < ActiveRecord::Base
     if save
       self.pdf_to_file
     end
+  end
+
+  def clear_old
+    self.done = false
+    self.remove_file = true
+    self.save
+    table_lists.delete_all
+
+    self.remove_file = nil
   end
 
   def add_to_worker
