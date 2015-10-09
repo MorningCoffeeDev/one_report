@@ -62,13 +62,12 @@ module ReportPdf
   end
 
   def filename(extension = 'pdf')
-    filename = file_filename
-    if filename
-      filename
+    if file_filename.present?
+      filename = file_filename
     elsif reportable.respond_to?(:filename)
       filename = reportable.filename
     else
-      filename = "report_#{self.id}"
+      filename = "#{reportable_name.camelize}-#{reportable_id}"
     end
 
     unless filename.end_with?(extension)
