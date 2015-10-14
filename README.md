@@ -11,7 +11,7 @@ OneReport is a Rails Engine used for generating complex report, It can export to
 - report file store;
 - send email notice user after finished sidekiq job;
 
-# Getting Started
+## Getting Started
 
 #### step-1: Add one_report to you Gemfile:
 
@@ -25,7 +25,20 @@ gem 'one_report'
 rake db:migrate
 ```
 
-#### step-3: Define report in model
+## Work with Report
+
+#### step-1: Define table
+this step is important, it format the report's data format
+
+[Define Report Table](doc/define-report-table.md)
+
+#### step-2: Define report method
+[Define Report Method](doc/define-report-method.md)
+
+#### step-3: (optional) Define report pdf's style
+[Define report pdf style](doc/define-pdf-style)
+
+#### step-4: Define report in model
 
 ```ruby
 class StudentReport < ActiveRecord::Base
@@ -37,13 +50,4 @@ Since the definition, there are several meaning：
   * add method: `sports_report_id`, this method will get report list's id
   * add method: `sports_report_report_list`, this method will get report list model, for addition, It will generate a queue job;
 
-#### step-4: Define table
-this step is important, it format the report's data format
 
-[Define Report Table](doc/define-report-table.md)
-
-#### step-5: Define report method
-[Define Report Method](doc/define-report-method.md)
-
-#### step-6: (optional) Define report pdf's style
-[Define report pdf style](doc/define-pdf-style)

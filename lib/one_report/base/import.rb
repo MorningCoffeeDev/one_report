@@ -4,7 +4,7 @@ module OneReport::Import
     if scope.respond_to?(:call)
       @collection = scope
     else
-      raise 'The scope must be a lambda'
+      raise 'The scope must be callable'
     end
 
     self
@@ -12,12 +12,14 @@ module OneReport::Import
 
   def column(name, field: nil, header: nil, argument: nil, footer: nil)
     unless name.is_a?(Symbol)
-      raise 'must pass a symbol'
+      raise 'please pass a symbol for column name'
     end
 
-    unless @columns.include?(name)
-      columns << name
+    if @columns.include?(name)
+      raise 'The column is repeated'
     end
+
+    columns << name
 
     if field.nil?
       fields.merge!(name => name)
@@ -43,9 +45,7 @@ module OneReport::Import
       footers.merge!(name => footer)
     end
 
-    if argument.nil?
-      nil  # todo use next ?
-    elsif argument.is_a?(Array)
+    if argument && argument.is_a?(Array)
       arguments.merge!(name => argument)
     else
       raise 'wrong argument type'
@@ -61,6 +61,7 @@ module OneReport::Import
     self
   end
 
+  private
   def header_default(name)
     h = {name => name.to_s.send(inflector)}
     headers.merge! h
