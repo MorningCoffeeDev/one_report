@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150723085449) do
+ActiveRecord::Schema.define(version: 20150817095009) do
 
   create_table "combine_report_lists", force: :cascade do |t|
     t.integer  "combine_id"
@@ -71,6 +71,9 @@ ActiveRecord::Schema.define(version: 20150723085449) do
     t.integer  "table_items_count",              default: 0
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
+    t.string   "note_header",       limit: 4096
+    t.string   "note_footer",       limit: 4096
+    t.string   "footers",           limit: 2048
   end
 
   add_index "table_lists", ["report_list_id"], name: "index_table_lists_on_report_list_id"

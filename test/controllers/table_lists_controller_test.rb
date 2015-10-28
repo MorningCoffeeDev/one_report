@@ -2,7 +2,7 @@ require 'test_helper'
 
 class TableListsControllerTest < ActionController::TestCase
   setup do
-    @table_list = table_lists(:one)
+    @table_list = create :table_list
   end
 
   test "should get index" do
