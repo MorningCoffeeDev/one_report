@@ -23,7 +23,12 @@ module ReportPdf
   end
 
   def pdf_string
-    pdf_result.render
+    if reportable.respond_to?(:pdf_result)
+      result = reportable.pdf_result
+    else
+      result = pdf_result
+    end
+    result.render
   end
 
   def pdf_to_file

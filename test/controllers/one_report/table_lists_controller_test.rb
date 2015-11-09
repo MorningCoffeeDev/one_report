@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TableListsControllerTest < ActionController::TestCase
+class OneReport::TableListsControllerTest < ActionController::TestCase
   setup do
     @table_list = create :table_list
   end
