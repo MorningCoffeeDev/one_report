@@ -47,8 +47,6 @@ module OneReport::Import
 
     if argument && argument.is_a?(Array)
       arguments.merge!(name => argument)
-    else
-      raise 'wrong argument type'
     end
 
     self
