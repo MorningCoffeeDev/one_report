@@ -19,11 +19,7 @@ class TableList < ActiveRecord::Base
   end
 
   def csv_headers
-    begin
-      CSV.parse_line(headers)
-    rescue
-      CSV.parse_line(headers, quote_char: '\'')
-    end
+    CSV.parse_line(headers, row_sep: "\n")
   end
 
   def csv_fields
