@@ -28,7 +28,7 @@ class Combine < ActiveRecord::Base
   end
 
   def add_to_worker
-    CombineWorker.perform_in(500, self.id)
+    CombineWorker.perform_async(self.id)
   end
 
 end
